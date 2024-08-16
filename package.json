@@ -8,5 +8,17 @@
   "author": "",
   "license": "MIT",
   "description": "",
-  "type": "module"
+  "type": "module",
+  "bin": {
+    "dbat": "./bin/run.js"
+  },
+  "oclif": {
+    "bin": "dbat",
+    "commands": "commands",
+    "dirname": "dbat",
+    "topicSeparator": " "
+  },
+  "dependencies": {
+    "@oclif/core": "^4.0.17"
+  }
 }
