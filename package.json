@@ -10,7 +10,7 @@
   "description": "",
   "type": "module",
   "bin": {
-    "dbat": "./bin/run.js"
+    "dbat": "run.js"
   },
   "oclif": {
     "bin": "dbat",
