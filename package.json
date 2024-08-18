@@ -20,8 +20,5 @@
   },
   "dependencies": {
     "@oclif/core": "^4.0.17"
-  },
-  "devDependencies": {
-    "standard": "^17.1.0"
   }
 }
