@@ -1,5 +1,7 @@
-import { Command } from "@oclif/core";
+import fs from "fs-extra";
+import path from "path";
 import prompts from "prompts";
+import { Command } from "@oclif/core";
 
 export default class Add extends Command {
   static description = "save database connection";
@@ -26,6 +28,18 @@ export default class Add extends Command {
   async run() {
     const answers = await prompts(this.#questions);
 
-    this.log(answers);
+    const configPath = path.join(this.config.configDir, "config.json");
+
+    await fs.ensureFile(configPath);
+
+    const config = (await fs.readJson(configPath, { throws: false })) ?? {};
+
+    if (!config.hasOwnProperty("databases")) {
+      config.databases = [];
+    }
+
+    config.databases.push(answers);
+
+    await fs.writeJson(configPath, config);
   }
 }
