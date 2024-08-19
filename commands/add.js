@@ -5,7 +5,6 @@ import { Command } from "@oclif/core";
 
 export default class Add extends Command {
   static description = "save database connection";
-  static aliases = ["save"];
 
   #questions = [
     {
@@ -35,10 +34,10 @@ export default class Add extends Command {
     const config = (await fs.readJson(configPath, { throws: false })) ?? {};
 
     if (!config.hasOwnProperty("databases")) {
-      config.databases = [];
+      config.databases = {};
     }
 
-    config.databases.push(answers);
+    config.databases[answers.host] = answers;
 
     await fs.writeJson(configPath, config);
   }
