@@ -9,6 +9,10 @@
   "license": "MIT",
   "description": "",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lewissteele/dbat.git"
+  },
   "bin": {
     "dbat": "run.js"
   },
