@@ -19,7 +19,8 @@
     "topicSeparator": " "
   },
   "dependencies": {
-    "@oclif/core": "^4.0.17"
+    "@oclif/core": "^4.0.17",
+    "xdg-basedir": "^5.1.0"
   },
   "devDependencies": {
     "prettier": "^3.3.3"
