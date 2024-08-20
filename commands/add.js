@@ -21,6 +21,7 @@ export default class Add extends Command {
       type: "text",
       name: "password",
       message: "password",
+      style: "password",
     },
   ];
 
