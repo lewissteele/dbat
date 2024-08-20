@@ -23,9 +23,9 @@ export default class Connect extends Command {
     }
 
     const sequelize = new Sequelize({
-      dialect: 'sqlite',
+      dialect: "sqlite",
       logging: false,
-      storage: 'database.sqlite',
+      storage: "database.sqlite",
     });
 
     const rl = readline.createInterface({
@@ -36,8 +36,8 @@ export default class Connect extends Command {
     rl.prompt();
 
     rl.on("line", async (line) => {
-      const [results, meta] = await sequelize.query(line)
-      this.log(results, meta)
+      const [results, meta] = await sequelize.query(line);
+      this.log(results, meta);
       rl.prompt();
     });
   }
