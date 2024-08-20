@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@oclif/core": "^4.0.17",
+    "cli-table3": "^0.6.5",
     "fs-extra": "^11.2.0",
     "prompts": "^2.4.2",
     "sequelize": "^6.37.3",
