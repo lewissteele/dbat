@@ -26,6 +26,10 @@
     "@oclif/core": "^4.0.17",
     "cli-table3": "^0.6.5",
     "fs-extra": "^11.2.0",
+    "mariadb": "^3.3.1",
+    "mysql2": "^3.11.0",
+    "pg": "^8.12.0",
+    "pg-hstore": "^2.3.4",
     "prompts": "^2.4.2",
     "sequelize": "^6.37.3",
     "sqlite3": "^5.1.7"
