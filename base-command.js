@@ -9,7 +9,7 @@ export default class BaseCommand extends Command {
   };
 
   async getConfig() {
-    await fs.ensureFile(this.#getConfigPath())
+    await fs.ensureFile(this.#getConfigPath());
 
     const config = await fs.readJson(this.#getConfigPath(), {
       throws: false,
