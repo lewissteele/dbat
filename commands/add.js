@@ -25,8 +25,34 @@ export default class Add extends Command {
     },
   ];
 
+  #sqliteQuestions = [
+    {
+      type: "text",
+      name: "storage",
+      message: "path to .sqlite file",
+    },
+  ];
+
   async run() {
-    const answers = await prompts(this.#questions);
+    const { dialect } = await prompts({
+      choices: [
+        {
+          title: "sqlite",
+          value: "sqlite",
+        },
+        {
+          title: "mysql",
+          value: "mysql",
+        },
+      ],
+      message: "dialect",
+      name: "dialect",
+      type: "select",
+    });
+
+    const answers = await prompts(
+      dialect == "sqlite" ? this.#sqliteQuestions : this.#questions,
+    );
 
     const configPath = path.join(this.config.configDir, "config.json");
 
@@ -38,7 +64,10 @@ export default class Add extends Command {
       config.databases = {};
     }
 
-    config.databases[answers.host] = answers;
+    config.databases[answers.host || answers.storage] = {
+      ...answers,
+      dialect,
+    };
 
     await fs.writeJson(configPath, config);
   }

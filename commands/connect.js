@@ -4,6 +4,7 @@ import { Args, Command } from "@oclif/core";
 import readline from "node:readline/promises";
 import { stdin, stdout } from "node:process";
 import { Sequelize } from "sequelize";
+import Table from 'cli-table3';
 
 export default class Connect extends Command {
   static args = {
@@ -23,9 +24,8 @@ export default class Connect extends Command {
     }
 
     const sequelize = new Sequelize({
-      dialect: "sqlite",
+      ...database,
       logging: false,
-      storage: "database.sqlite",
     });
 
     const rl = readline.createInterface({
@@ -36,8 +36,25 @@ export default class Connect extends Command {
     rl.prompt();
 
     rl.on("line", async (line) => {
-      const [results, meta] = await sequelize.query(line);
-      this.log(results, meta);
+      const [results, meta] = await sequelize.query(line, { raw: true });
+
+      if (!results.length){
+        rl.prompt();
+        return
+      }
+
+      const headers = Object.keys(results[0])
+      const rows = results.map(row => Object.values(row))
+
+      const table = new Table({
+        head: headers,
+        rows: rows,
+      })
+
+      table.push(...rows)
+
+      this.log(table.toString())
+
       rl.prompt();
     });
   }
