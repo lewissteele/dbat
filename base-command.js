@@ -4,14 +4,14 @@ import { Command } from "@oclif/core";
 
 /** @abstract */
 export default class BaseCommand extends Command {
-  #defaultConfig = {
-    databases: [],
-  };
+  #configPath = path.join(this.config.configDir, "config.json");
+
+  #defaultConfig = { databases: [] };
 
   async getConfig() {
-    await fs.ensureFile(this.#getConfigPath());
+    await fs.ensureFile(this.#configPath);
 
-    const config = await fs.readJson(this.#getConfigPath(), {
+    const config = await fs.readJson(this.#configPath, {
       throws: false,
     });
 
@@ -23,10 +23,6 @@ export default class BaseCommand extends Command {
   }
 
   async setConfig(config) {
-    await fs.writeJson(this.#getConfigPath(), config);
-  }
-
-  #getConfigPath() {
-    return path.join(this.config.configDir, "config.json");
+    await fs.writeJson(this.#configPath, config);
   }
 }
