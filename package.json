@@ -13,9 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/lewissteele/dbat.git"
   },
-  "bin": {
-    "dbat": "run.js"
-  },
+  "bin": "dbat",
   "oclif": {
     "bin": "dbat",
     "commands": "commands",
