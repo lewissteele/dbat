@@ -1,12 +1,11 @@
-import fs from "fs-extra";
-import path from "path";
-import { Args, Command } from "@oclif/core";
-import readline from "node:readline/promises";
-import { stdin, stdout } from "node:process";
-import { Sequelize } from "sequelize";
+import BaseCommand from "../base-command.js";
 import Table from "cli-table3";
+import readline from "node:readline/promises";
+import { Args } from "@oclif/core";
+import { Sequelize } from "sequelize";
+import { stdin, stdout } from "node:process";
 
-export default class Connect extends Command {
+export default class Connect extends BaseCommand {
   static args = {
     database: Args.string(),
   };
@@ -14,8 +13,7 @@ export default class Connect extends Command {
   async run() {
     const { args } = await this.parse(Connect);
 
-    const configPath = path.join(this.config.configDir, "config.json");
-    const config = await fs.readJson(configPath, { throws: false });
+    const config = await this.getConfig();
     const database = config.databases[args.database];
 
     if (database == undefined) {

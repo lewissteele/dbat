@@ -1,9 +1,9 @@
 import fs from "fs-extra";
 import path from "path";
 import prompts from "prompts";
-import { Command } from "@oclif/core";
+import BaseCommand from "../base-command.js";
 
-export default class Add extends Command {
+export default class Add extends BaseCommand {
   static description = "save database connection";
 
   #questions = [
@@ -54,21 +54,13 @@ export default class Add extends Command {
       dialect == "sqlite" ? this.#sqliteQuestions : this.#questions,
     );
 
-    const configPath = path.join(this.config.configDir, "config.json");
-
-    await fs.ensureFile(configPath);
-
-    const config = (await fs.readJson(configPath, { throws: false })) ?? {};
-
-    if (!config.hasOwnProperty("databases")) {
-      config.databases = {};
-    }
+    const config = await this.getConfig();
 
     config.databases[answers.host || answers.storage] = {
       ...answers,
       dialect,
     };
 
-    await fs.writeJson(configPath, config);
+    await this.setConfig(config);
   }
 }

@@ -1,8 +1,7 @@
-import { Args, Command } from "@oclif/core";
-import fs from "fs-extra";
-import path from "path";
+import { Args } from "@oclif/core";
+import BaseCommand from "../base-command.js";
 
-export default class Remove extends Command {
+export default class Remove extends BaseCommand {
   static args = {
     database: Args.string(),
   };
@@ -11,11 +10,10 @@ export default class Remove extends Command {
   async run() {
     const { args } = await this.parse(Remove);
 
-    const configPath = path.join(this.config.configDir, "config.json");
-    const config = (await fs.readJson(configPath, { throws: false })) ?? {};
+    const config = await this.getConfig();
 
     delete config.databases[args.database];
 
-    await fs.writeJson(configPath, config);
+    await this.setConfig(config);
   }
 }

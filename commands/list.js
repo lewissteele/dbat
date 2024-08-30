@@ -1,12 +1,9 @@
-import fs from "fs-extra";
-import path from "path";
-import { Command } from "@oclif/core";
+import BaseCommand from "../base-command.js";
 
-export default class List extends Command {
+export default class List extends BaseCommand {
   static description = "show databases";
   async run() {
-    const configPath = path.join(this.config.configDir, "config.json");
-    const config = (await fs.readJson(configPath, { throws: false })) ?? {};
+    const config = await this.getConfig();
     const databases = Object.keys(config.databases);
 
     if (!databases.length) {
