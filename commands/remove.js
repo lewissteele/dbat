@@ -1,5 +1,5 @@
-import { Args } from "@oclif/core";
 import BaseCommand from "../base-command.js";
+import { Args } from "@oclif/core";
 
 export default class Remove extends BaseCommand {
   static args = {
