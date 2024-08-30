@@ -49,7 +49,7 @@ export default class Add extends BaseCommand {
         {
           title: "postgres",
           value: "postgres",
-        }
+        },
       ],
       message: "dialect",
       name: "dialect",
