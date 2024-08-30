@@ -1,7 +1,5 @@
-import fs from "fs-extra";
-import path from "path";
-import prompts from "prompts";
 import BaseCommand from "../base-command.js";
+import prompts from "prompts";
 
 export default class Add extends BaseCommand {
   static description = "save database connection";
@@ -44,6 +42,14 @@ export default class Add extends BaseCommand {
           title: "mysql",
           value: "mysql",
         },
+        {
+          title: "mariadb",
+          value: "mariadb",
+        },
+        {
+          title: "postgres",
+          value: "postgres",
+        }
       ],
       message: "dialect",
       name: "dialect",
