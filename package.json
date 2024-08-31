@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@oclif/core": "^4.0.17",
+    "cli-highlight": "^2.1.11",
     "cli-table3": "^0.6.5",
     "fs-extra": "^11.2.0",
     "mariadb": "^3.3.1",
