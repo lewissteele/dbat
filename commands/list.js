@@ -13,4 +13,4 @@ module.exports = class List extends BaseCommand {
 
     databases.forEach((val) => this.log(val));
   }
-}
+};

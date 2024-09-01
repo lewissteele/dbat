@@ -25,4 +25,4 @@ module.exports = class BaseCommand extends Command {
   async setConfig(config) {
     await fs.writeJson(this.#configPath, config);
   }
-}
+};

@@ -56,4 +56,4 @@ module.exports = class Connect extends BaseCommand {
       rl.prompt();
     });
   }
-}
+};

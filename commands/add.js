@@ -69,4 +69,4 @@ module.exports = class Add extends BaseCommand {
 
     await this.setConfig(config);
   }
-}
+};

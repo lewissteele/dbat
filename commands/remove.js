@@ -16,4 +16,4 @@ module.exports = class Remove extends BaseCommand {
 
     await this.setConfig(config);
   }
-}
+};

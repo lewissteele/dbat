@@ -2,4 +2,4 @@
 
 const { execute } = require("@oclif/core");
 
-(async () => await execute({dir: __dirname}))()
+(async () => await execute({ dir: __dirname }))();
