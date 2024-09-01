@@ -1,5 +1,5 @@
-import BaseCommand from "../base-command.js";
-import { Args } from "@oclif/core";
+const BaseCommand = require("../base-command");
+const { Args } = require("@oclif/core");
 
 export default class Remove extends BaseCommand {
   static args = {

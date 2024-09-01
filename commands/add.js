@@ -1,5 +1,5 @@
-import BaseCommand from "../base-command.js";
-import prompts from "prompts";
+const BaseCommand = require("../base-command");
+const prompts = require("prompts");
 
 export default class Add extends BaseCommand {
   static description = "save database connection";

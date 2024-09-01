@@ -1,6 +1,6 @@
-import fs from "fs-extra";
-import path from "path";
-import { Command } from "@oclif/core";
+const fs = require("fs-extra");
+const path = require("path");
+const { Command } = require("@oclif/core");
 
 /** @abstract */
 export default class BaseCommand extends Command {

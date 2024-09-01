@@ -1,4 +1,4 @@
-import BaseCommand from "../base-command.js";
+const BaseCommand = require("../base-command");
 
 export default class List extends BaseCommand {
   static description = "show databases";

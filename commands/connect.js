@@ -1,9 +1,9 @@
-import BaseCommand from "../base-command.js";
-import Table from "cli-table3";
-import readline from "node:readline/promises";
-import { Args } from "@oclif/core";
-import { Sequelize } from "sequelize";
-import { stdin, stdout } from "node:process";
+const BaseCommand = require("../base-command");
+const Table = require("cli-table3");
+const readline = require("node:readline/promises");
+const { Args } = require("@oclif/core");
+const { Sequelize } = require("sequelize");
+const { stdin, stdout } = require("node:process");
 
 export default class Connect extends BaseCommand {
   static args = {
