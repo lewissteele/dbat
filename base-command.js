@@ -3,7 +3,7 @@ const path = require("path");
 const { Command } = require("@oclif/core");
 
 /** @abstract */
-export default class BaseCommand extends Command {
+module.exports = class BaseCommand extends Command {
   #configPath = path.join(this.config.configDir, "config.json");
 
   #defaultConfig = { databases: [] };

@@ -1,7 +1,7 @@
 const BaseCommand = require("../base-command");
 const { Args } = require("@oclif/core");
 
-export default class Remove extends BaseCommand {
+module.exports = class Remove extends BaseCommand {
   static args = {
     database: Args.string(),
   };

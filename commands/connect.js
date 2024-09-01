@@ -5,7 +5,7 @@ const { Args } = require("@oclif/core");
 const { Sequelize } = require("sequelize");
 const { stdin, stdout } = require("node:process");
 
-export default class Connect extends BaseCommand {
+module.exports = class Connect extends BaseCommand {
   static args = {
     database: Args.string(),
   };

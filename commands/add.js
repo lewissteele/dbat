@@ -1,7 +1,7 @@
 const BaseCommand = require("../base-command");
 const prompts = require("prompts");
 
-export default class Add extends BaseCommand {
+module.exports = class Add extends BaseCommand {
   static description = "save database connection";
 
   #questions = [

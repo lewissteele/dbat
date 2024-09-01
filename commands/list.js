@@ -1,6 +1,6 @@
 const BaseCommand = require("../base-command");
 
-export default class List extends BaseCommand {
+module.exports = class List extends BaseCommand {
   static description = "show databases";
   async run() {
     const config = await this.getConfig();
