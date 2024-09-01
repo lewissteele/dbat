@@ -15,7 +15,7 @@
   "bin": "dbat",
   "oclif": {
     "bin": "dbat",
-    "commands": "commands",
+    "commands": "src/commands",
     "dirname": "dbat",
     "topicSeparator": " "
   },
