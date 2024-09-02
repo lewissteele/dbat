@@ -6,20 +6,14 @@ const { Command } = require("@oclif/core");
 module.exports = class BaseCommand extends Command {
   #configPath = path.join(this.config.configDir, "config.json");
 
-  #defaultConfig = { databases: [] };
-
   async getConfig() {
-    await fs.ensureFile(this.#configPath);
-
-    const config = await fs.readJson(this.#configPath, {
-      throws: false,
-    });
-
-    if (config) {
-      return config;
+    if (await fs.exists(this.#configPath)) {
+      return await fs.readJson(this.#configPath, {
+        throws: false,
+      });
     }
 
-    return this.#defaultConfig;
+    return { databases: {} };
   }
 
   async setConfig(config) {
