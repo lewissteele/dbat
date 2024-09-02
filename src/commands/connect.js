@@ -33,8 +33,8 @@ module.exports = class Connect extends BaseCommand {
 
     rl.prompt();
 
-    rl.on("line", async (line) => {
-      const [results, meta] = await sequelize.query(line, { raw: true });
+    rl.on("line", async (query) => {
+      const [results, meta] = await sequelize.query(query, { raw: true });
 
       if (!results.length) {
         rl.prompt();
@@ -52,6 +52,8 @@ module.exports = class Connect extends BaseCommand {
       table.push(...rows);
 
       this.log(table.toString());
+
+      this.history.push(query);
 
       rl.prompt();
     });
