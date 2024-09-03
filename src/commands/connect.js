@@ -4,6 +4,7 @@ const readline = require("node:readline/promises");
 const { Args } = require("@oclif/core");
 const { Sequelize } = require("sequelize");
 const { stdin, stdout } = require("node:process");
+const history = require("../api/history");
 
 module.exports = class Connect extends BaseCommand {
   static args = {
@@ -53,7 +54,7 @@ module.exports = class Connect extends BaseCommand {
 
       this.log(table.toString());
 
-      this.history.push(query);
+      history.push(query);
 
       rl.prompt();
     });
