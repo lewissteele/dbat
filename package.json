@@ -17,7 +17,10 @@
     "bin": "dbat",
     "commands": "src/commands",
     "dirname": "dbat",
-    "topicSeparator": " "
+    "topicSeparator": " ",
+    "hooks": {
+      "init": "src/hooks/config"
+    }
   },
   "dependencies": {
     "@oclif/core": "^4.0.17",
