@@ -13,7 +13,7 @@ exports.getConfig = async function getConfig() {
   return { databases: {} };
 };
 
-exports.getConfig = async function setConfig(config) {
+exports.setConfig = async function setConfig(config) {
   await fs.writeJson(getPath(), config);
 };
 
