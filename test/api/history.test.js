@@ -9,13 +9,10 @@ test("history saves to file", async () => {
     configDir: faker.system.directoryPath(),
   };
 
-  const configFile = path.join(
-    global.config.configDir,
-    "history.json",
-  );
+  const configFile = path.join(global.config.configDir, "history.json");
 
   mock({
-    [configFile]: '',
+    [configFile]: "",
   });
 
   await history.push("select * from test");
