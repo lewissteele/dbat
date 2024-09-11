@@ -12,9 +12,9 @@
     "type": "git",
     "url": "git+https://github.com/lewissteele/dbat.git"
   },
-  "bin": "dbat",
+  "bin": "bin/dbat",
   "oclif": {
-    "bin": "dbat",
+    "bin": "bin/dbat",
     "commands": "src/commands",
     "dirname": "dbat",
     "topicSeparator": " ",
