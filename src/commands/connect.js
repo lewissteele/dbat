@@ -7,6 +7,7 @@ const { stdin, stdout } = require("node:process");
 const history = require("../api/history");
 
 module.exports = class Connect extends BaseCommand {
+  static description = "run queries on database";
   static args = {
     database: Args.string(),
   };
