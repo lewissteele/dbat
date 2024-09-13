@@ -3,8 +3,8 @@ const Table = require("cli-table3");
 const readline = require("node:readline/promises");
 const { Args } = require("@oclif/core");
 const { Sequelize } = require("sequelize");
+const { pushToHistory } = require("../api/history");
 const { stdin, stdout } = require("node:process");
-const history = require("../api/history");
 
 module.exports = class Connect extends BaseCommand {
   static description = "run queries on database";
@@ -55,7 +55,7 @@ module.exports = class Connect extends BaseCommand {
 
       this.log(table.toString());
 
-      history.push(query);
+      await pushToHistory(query);
 
       rl.prompt();
     });

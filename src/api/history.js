@@ -1,19 +1,7 @@
 const fs = require("fs-extra");
 const path = require("path");
 
-/** @param {string} query */
-module.exports.push = async function (query) {
-  const history = await getHistory();
-  history.push(query);
-  await fs.writeJson(getPath(), history);
-};
-
-/** @returns {string} */
-function getPath() {
-  return path.join(global.config.configDir, "history.json");
-}
-
-/** @returns {array<string>} */
+/** @returns {Promise<array<string>>} */
 async function getHistory() {
   await fs.ensureFile(getPath());
 
@@ -27,3 +15,20 @@ async function getHistory() {
 
   return [];
 }
+
+/** @param {string} query */
+async function pushToHistory(query) {
+  const history = await getHistory();
+  history.push(query);
+  await fs.writeJson(getPath(), history);
+}
+
+/** @returns {string} */
+function getPath() {
+  return path.join(global.config.configDir, "history.json");
+}
+
+module.exports = {
+  getHistory,
+  pushToHistory,
+};

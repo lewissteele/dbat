@@ -1,8 +1,9 @@
-const history = require("../../src/api/history");
+const assert = require("assert");
 const mock = require("mock-fs");
 const path = require("path");
 const test = require("node:test");
 const { faker } = require("@faker-js/faker");
+const { getHistory, pushToHistory } = require("../../src/api/history");
 
 test("history saves to file", async () => {
   global.config = {
@@ -15,5 +16,9 @@ test("history saves to file", async () => {
     [configFile]: "",
   });
 
-  await history.push("select * from test");
+  const query = "select * from test";
+
+  await pushToHistory(query);
+
+  assert((await getHistory()).includes(query));
 });
