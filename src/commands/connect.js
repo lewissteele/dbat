@@ -1,12 +1,12 @@
-const BaseCommand = require("../base-command");
 const Table = require("cli-table3");
 const readline = require("node:readline/promises");
 const { Args } = require("@oclif/core");
-const { Sequelize } = require("sequelize");
+const { Command } = require("@oclif/core");
+const { getConnection, databaseExists } = require("../api/database");
 const { pushToHistory } = require("../api/history");
 const { stdin, stdout } = require("node:process");
 
-module.exports = class Connect extends BaseCommand {
+module.exports = class Connect extends Command {
   static description = "run queries on database";
   static args = {
     database: Args.string(),
@@ -15,18 +15,12 @@ module.exports = class Connect extends BaseCommand {
   async run() {
     const { args } = await this.parse(Connect);
 
-    const config = await this.getConfig();
-    const database = config.databases[args.database];
-
-    if (database == undefined) {
+    if (!databaseExists(args.database)) {
       this.log("no such database");
       return;
     }
 
-    const sequelize = new Sequelize({
-      ...database,
-      logging: false,
-    });
+    const connection = await getConnection(args.database);
 
     const rl = readline.createInterface({
       input: stdin,
@@ -36,7 +30,7 @@ module.exports = class Connect extends BaseCommand {
     rl.prompt();
 
     rl.on("line", async (query) => {
-      const [results, meta] = await sequelize.query(query, { raw: true });
+      const [results, meta] = await connection.query(query, { raw: true });
 
       if (!results.length) {
         rl.prompt();

@@ -1,5 +1,6 @@
 const fs = require("fs-extra");
 const path = require("path");
+const { Sequelize } = require("sequelize");
 
 /** @returns {Promise<object>} */
 async function getDatabases() {
@@ -27,12 +28,35 @@ async function saveDatabase(name, database) {
   await fs.writeJson(getPath(), databases);
 }
 
+/**
+ * @param {string} name
+ * @returns {Promise<boolean>}
+ */
+async function databaseExists(name) {
+  return (await getDatabases())[name] != undefined;
+}
+
+/**
+ * @param {string} name
+ * @returns {Promise<Sequelize>}
+ */
+async function getConnection(name) {
+  const database =  (await getDatabases())[name];
+
+  return new Sequelize({
+    ...database,
+    logging: false,
+  });
+}
+
 /** @returns {string} */
 function getPath() {
   return path.join(global.config.configDir, "databases.json");
 }
 
 module.exports = {
+  databaseExists,
+  getConnection,
   getDatabases,
   saveDatabase,
 };
