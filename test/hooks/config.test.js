@@ -1,6 +1,4 @@
-const assert = require("node:assert");
 const configHook = require("../../src/hooks/config");
-const test = require("node:test");
 const { faker } = require("@faker-js/faker");
 
 test("config hook", async () => {
@@ -12,5 +10,5 @@ test("config hook", async () => {
 
   await configHook(options);
 
-  assert.equal(global.config, options.config);
+  expect(global.config).toEqual(options.config);
 });
