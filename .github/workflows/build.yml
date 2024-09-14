@@ -17,4 +17,4 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: npx prettier . --check
-      - run: node --test
+      - run: npx jest
