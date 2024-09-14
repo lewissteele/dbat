@@ -33,5 +33,6 @@ function getPath() {
 }
 
 module.exports = {
+  getDatabases,
   saveDatabase,
 };
