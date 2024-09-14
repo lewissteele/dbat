@@ -1,9 +1,6 @@
 {
   "name": "dbat",
   "version": "0.0.3",
-  "scripts": {
-    "test": "jest"
-  },
   "author": "Lewis Steele",
   "license": "MIT",
   "description": "",
