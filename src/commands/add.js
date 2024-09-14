@@ -10,12 +10,15 @@ module.exports = class Add extends Command {
   async run() {
     const database = {};
 
-    Object.assign(database, await prompts({
-      choices: questions.dialects,
-      message: "dialect",
-      name: "dialect",
-      type: "select",
-    }));
+    Object.assign(
+      database,
+      await prompts({
+        choices: questions.dialects,
+        message: "dialect",
+        name: "dialect",
+        type: "select",
+      }),
+    );
 
     Object.assign(database, await prompts(questions[database.dialect]));
 
