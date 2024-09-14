@@ -1,72 +1,31 @@
-const BaseCommand = require("../base-command");
+const path = require("path");
 const prompts = require("prompts");
+const questions = require("../api/questions");
+const { Command } = require("@oclif/core");
+const { saveDatabase } = require("../api/database");
 
-module.exports = class Add extends BaseCommand {
+module.exports = class Add extends Command {
   static description = "save database connection";
 
-  #questions = [
-    {
-      type: "text",
-      name: "host",
-      message: "host",
-    },
-    {
-      type: "text",
-      name: "username",
-      message: "username",
-    },
-    {
-      type: "text",
-      name: "password",
-      message: "password",
-      style: "password",
-    },
-  ];
-
-  #sqliteQuestions = [
-    {
-      type: "text",
-      name: "storage",
-      message: "path to .sqlite file",
-    },
-  ];
-
   async run() {
-    const { dialect } = await prompts({
-      choices: [
-        {
-          title: "sqlite",
-          value: "sqlite",
-        },
-        {
-          title: "mysql",
-          value: "mysql",
-        },
-        {
-          title: "mariadb",
-          value: "mariadb",
-        },
-        {
-          title: "postgres",
-          value: "postgres",
-        },
-      ],
+    const database = {};
+
+    Object.assign(database, await prompts({
+      choices: questions.dialects,
       message: "dialect",
       name: "dialect",
       type: "select",
+    }));
+
+    Object.assign(database, await prompts(questions[database.dialect]));
+
+    const { name } = await prompts({
+      type: "text",
+      name: "name",
+      message: "name",
+      initial: database.host || path.parse(database.storage).base,
     });
 
-    const answers = await prompts(
-      dialect == "sqlite" ? this.#sqliteQuestions : this.#questions,
-    );
-
-    const config = await this.getConfig();
-
-    config.databases[answers.host || answers.storage] = {
-      ...answers,
-      dialect,
-    };
-
-    await this.setConfig(config);
+    await saveDatabase(name, database);
   }
 };
