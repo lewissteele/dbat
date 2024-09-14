@@ -2,7 +2,7 @@ const Table = require("cli-table3");
 const readline = require("node:readline/promises");
 const { Args } = require("@oclif/core");
 const { Command } = require("@oclif/core");
-const { getConnection, databaseExists } = require("../api/database");
+const { getConnection } = require("../api/database");
 const { pushToHistory } = require("../api/history");
 const { stdin, stdout } = require("node:process");
 
@@ -14,13 +14,14 @@ module.exports = class Connect extends Command {
 
   async run() {
     const { args } = await this.parse(Connect);
+    const connection = await getConnection(args.database);
 
-    if (!databaseExists(args.database)) {
+    if (!connection) {
       this.log("no such database");
       return;
     }
 
-    const connection = await getConnection(args.database);
+    await connection.authenticate();
 
     const rl = readline.createInterface({
       input: stdin,

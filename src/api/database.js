@@ -30,18 +30,14 @@ async function saveDatabase(name, database) {
 
 /**
  * @param {string} name
- * @returns {Promise<boolean>}
- */
-async function databaseExists(name) {
-  return (await getDatabases())[name] != undefined;
-}
-
-/**
- * @param {string} name
- * @returns {Promise<Sequelize>}
+ * @returns {Promise<Sequelize|null>}
  */
 async function getConnection(name) {
-  const database =  (await getDatabases())[name];
+  const database = (await getDatabases())[name];
+
+  if (!database) {
+    return null;
+  }
 
   return new Sequelize({
     ...database,
@@ -55,7 +51,6 @@ function getPath() {
 }
 
 module.exports = {
-  databaseExists,
   getConnection,
   getDatabases,
   saveDatabase,
