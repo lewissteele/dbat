@@ -15,8 +15,11 @@ async function getDatabases() {
 /**
  * @param {string} name
  * @param {object} database
- * @param {string} database.host
+ * @param {string} database.username
  * @param {string} database.password
+ * @param {string} database.dialect
+ * @param {string} [database.host]
+ * @param {string} [database.storage]
  */
 async function saveDatabase(name, database) {
   const databases = await getDatabases();
