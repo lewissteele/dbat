@@ -1,15 +1,8 @@
-const assert = require("node:assert");
-const fs = require("fs-extra");
-const { test, before, after } = require("node:test");
 const {
-  saveDatabase,
-  getDatabases,
   getConnection,
+  getDatabases,
+  saveDatabase,
 } = require("../../src/api/database");
-
-before(() => {
-  global.config = { configDir: "config" };
-});
 
 test("database connection is saved to file", async () => {
   const database = {
@@ -21,7 +14,7 @@ test("database connection is saved to file", async () => {
 
   const databases = await getDatabases();
 
-  assert(databases["test"], database);
+  expect(databases["test"]).toEqual(database);
 });
 
 test("it can connect to database", async () => {
@@ -33,8 +26,4 @@ test("it can connect to database", async () => {
   const connection = await getConnection("test");
 
   connection.authenticate();
-});
-
-after(async () => {
-  await fs.rm(global.config.configDir, { recursive: true });
 });
