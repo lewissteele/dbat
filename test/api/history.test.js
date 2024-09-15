@@ -20,7 +20,7 @@ test("history saves to file", async () => {
 
   const history = await getHistory();
 
-  assert(history.includes(query))
+  assert(history.includes(query));
 });
 
 after(() => {
