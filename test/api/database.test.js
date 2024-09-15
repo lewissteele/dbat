@@ -5,10 +5,8 @@ const {
   getConnection,
 } = require("../../src/api/database");
 
-const configDir = "./config";
-
 beforeAll(() => {
-  global.config = { configDir: configDir };
+  global.config = { configDir: "config" };
 });
 
 test("database connection is saved to file", async () => {
@@ -25,7 +23,7 @@ test("database connection is saved to file", async () => {
 });
 
 test("it can connect to database", async () => {
-  jest.mock('fs-extra')
+  jest.mock("fs-extra");
 
   await saveDatabase("test", {
     dialect: "sqlite",
@@ -38,5 +36,5 @@ test("it can connect to database", async () => {
 });
 
 afterAll(async () => {
-  await fs.rm(configDir, { recursive: true });
+  await fs.rm(global.config.configDir, { recursive: true });
 });
