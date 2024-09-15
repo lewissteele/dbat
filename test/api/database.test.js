@@ -1,11 +1,13 @@
+const assert = require("node:assert");
 const fs = require("fs-extra");
+const { test, before, after } = require("node:test");
 const {
   saveDatabase,
   getDatabases,
   getConnection,
 } = require("../../src/api/database");
 
-beforeAll(() => {
+before(() => {
   global.config = { configDir: "config" };
 });
 
@@ -19,12 +21,10 @@ test("database connection is saved to file", async () => {
 
   const databases = await getDatabases();
 
-  expect(databases["test"]).toEqual(database);
+  assert(databases["test"], database);
 });
 
 test("it can connect to database", async () => {
-  jest.mock("fs-extra");
-
   await saveDatabase("test", {
     dialect: "sqlite",
     storage: ":memory:",
@@ -35,6 +35,6 @@ test("it can connect to database", async () => {
   connection.authenticate();
 });
 
-afterAll(async () => {
+after(async () => {
   await fs.rm(global.config.configDir, { recursive: true });
 });

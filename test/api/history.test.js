@@ -1,9 +1,11 @@
+const assert = require("assert");
 const mock = require("mock-fs");
 const path = require("path");
 const { faker } = require("@faker-js/faker");
 const { getHistory, pushToHistory } = require("../../src/api/history");
+const { test, before, after } = require("node:test");
 
-beforeEach(() => {
+before(() => {
   const fakePath = faker.system.directoryPath();
 
   global.config = { configDir: fakePath };
@@ -16,9 +18,11 @@ test("history saves to file", async () => {
 
   await pushToHistory(query);
 
-  expect((await getHistory()).includes(query)).toBe(true);
+  const history = await getHistory();
+
+  assert(history.includes(query))
 });
 
-afterEach(() => {
+after(() => {
   mock.restore();
 });
