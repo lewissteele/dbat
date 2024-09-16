@@ -41,6 +41,7 @@
   },
   "mocha": {
     "recursive": true,
+    "reporter": "list",
     "require": "test/root-hook"
   }
 }
