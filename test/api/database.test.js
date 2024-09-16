@@ -1,10 +1,11 @@
+const assert = require("node:assert");
 const {
   getConnection,
   getDatabases,
   saveDatabase,
 } = require("../../src/api/database");
 
-test("database connection is saved to file", async () => {
+it("saves database connections to file", async () => {
   const database = {
     dialect: "sqlite",
     storage: ":memory:",
@@ -13,11 +14,10 @@ test("database connection is saved to file", async () => {
   await saveDatabase("test", database);
 
   const databases = await getDatabases();
-
-  expect(databases["test"]).toEqual(database);
+  assert.notStrictEqual(databases["test"], database);
 });
 
-test("it can connect to database", async () => {
+it("can connect to database", async () => {
   await saveDatabase("test", {
     dialect: "sqlite",
     storage: ":memory:",

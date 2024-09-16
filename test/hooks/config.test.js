@@ -1,11 +1,12 @@
+const assert = require("node:assert");
 const configHook = require("../../src/hooks/config");
 
-test("config hook", async () => {
+it("sets config to global object", async () => {
   const options = {
     config: { configDir: "config" },
   };
 
   await configHook(options);
 
-  expect(global.config).toEqual(options.config);
+  assert.equal(global.config, options.config);
 });
