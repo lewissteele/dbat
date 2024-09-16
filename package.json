@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^9.0.0",
+    "@oclif/test": "^4.0.9",
     "@types/jest": "^29.5.13",
     "jest": "^29.7.0",
     "mock-fs": "^5.2.0",
