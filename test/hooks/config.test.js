@@ -2,7 +2,7 @@ const configHook = require("../../src/hooks/config");
 
 test("config hook", async () => {
   const options = {
-    config: { dir: "config" },
+    config: { configDir: "config" },
   };
 
   await configHook(options);
