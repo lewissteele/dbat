@@ -11,9 +11,7 @@ it("lists all saved database connections", async () => {
     storage: ":memory:",
   });
 
-  const { stdout } = await captureOutput(async () => List.run(["-c=stdout"]), {
-    print: false,
-  });
+  const { stdout } = await captureOutput(() => List.run());
 
   assert.equal(stdout.trim(), expected);
 });
