@@ -18,6 +18,11 @@
       "init": "src/hooks/config"
     }
   },
+  "mocha": {
+    "recursive": true,
+    "reporter": "list",
+    "require": "test/root-hook"
+  },
   "dependencies": {
     "@oclif/core": "^4.0.17",
     "cli-highlight": "^2.1.11",
@@ -38,10 +43,5 @@
     "mock-fs": "^5.2.0",
     "prettier": "^3.3.3",
     "typescript": "^5.5.4"
-  },
-  "mocha": {
-    "recursive": true,
-    "reporter": "list",
-    "require": "test/root-hook"
   }
 }
