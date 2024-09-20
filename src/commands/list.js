@@ -1,9 +1,9 @@
-const { Command } = require("@oclif/core");
+const _ = require("lodash");
+const cmd = require("@oclif/core").Command;
 const { getDatabases } = require("../api/database");
 
-module.exports = class List extends Command {
-  static description = "show databases";
-
+module.exports = _.create(cmd.prototype, {
+  description: "show databases",
   async run() {
     const databases = Object.keys(await getDatabases());
 
@@ -13,5 +13,5 @@ module.exports = class List extends Command {
     }
 
     databases.forEach((val) => this.log(val));
-  }
-};
+  },
+});
