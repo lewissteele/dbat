@@ -28,6 +28,12 @@ async function saveDatabase(name, database) {
   await fs.writeJson(getPath(), databases);
 }
 
+async function removeDatabase(name) {
+  const databases = await getDatabases();
+  delete databases[name];
+  await fs.writeJson(getPath(), databases);
+}
+
 /**
  * @param {string} name
  * @returns {Promise<Sequelize|null>}
@@ -53,5 +59,6 @@ function getPath() {
 module.exports = {
   getConnection,
   getDatabases,
+  removeDatabase,
   saveDatabase,
 };
