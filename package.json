@@ -41,7 +41,7 @@
   "devDependencies": {
     "@faker-js/faker": "^9.0.0",
     "@oclif/test": "^4.0.9",
-    "chai": "^5.1.1",
+    "chai": "^4.5.0",
     "mocha": "^10.7.3",
     "mock-fs": "^5.2.0",
     "nyc": "^17.1.0",
