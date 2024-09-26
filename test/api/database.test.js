@@ -2,6 +2,7 @@ const assert = require("node:assert");
 const {
   getConnection,
   getDatabases,
+  removeDatabase,
   saveDatabase,
 } = require("../../src/api/database");
 
@@ -26,4 +27,17 @@ it("can connect to database", async () => {
   const connection = await getConnection("test");
 
   connection.authenticate();
+});
+
+it("can delete databases", async () => {
+  await saveDatabase("test", {
+    dialect: "sqlite",
+    storage: ":memory:",
+  });
+
+  await removeDatabase("test");
+
+  const databases = await getDatabases();
+
+  assert(!databases.hasOwnProperty("test"));
 });
