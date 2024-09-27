@@ -1,17 +1,17 @@
-const _ = require("lodash");
-const cmd = require("@oclif/core").Command;
+const { Command } = require("@oclif/core");
 const { getDatabases } = require("../api/database");
 
-module.exports = _.create(cmd.prototype, {
-  description: "show databases",
-  async run() {
-    const databases = _.keys(await getDatabases());
+module.exports = class List extends Command {
+  static description = "show databases";
 
-    if (_.isEmpty(databases)) {
+  async run() {
+    const databases = Object.keys(await getDatabases());
+
+    if (!databases.length) {
       this.log("no databases");
       return;
     }
 
-    _.each(databases, (val) => this.log(val));
-  },
-});
+    databases.forEach((val) => this.log(val));
+  }
+};
