@@ -11,10 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-go@v5
         with:
-          node-version: 22
-          cache: "npm"
-      - run: npm ci
-      - run: npx prettier . --check
-      - run: npx mocha
+          go-version: 1.23
+      - run: go build -v ./...
