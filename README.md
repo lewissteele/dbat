@@ -3,4 +3,6 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/lewissteele/dbat.svg)](https://pkg.go.dev/github.com/lewissteele/dbat)
 
 ## Installation
-`go install github.com/lewissteele/dbat@latest`
+```
+go install github.com/lewissteele/dbat@latest
+```
