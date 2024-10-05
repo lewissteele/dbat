@@ -17,14 +17,30 @@ func init() {
 }
 
 func run(cmd *cobra.Command, args []string) {
-	prompt := promptui.Prompt{
-		Label:    "host",
-		Validate: isNotBlank,
+	prompts := []promptui.Prompt{
+		promptui.Prompt{
+			Label:    "host",
+			Validate: isNotBlank,
+		},
+		promptui.Prompt{
+			Label:    "username",
+			Validate: isNotBlank,
+		},
+		promptui.Prompt{
+			HideEntered: true,
+			Label:       "password",
+		},
 	}
 
-	host, _ := prompt.Run()
+	var results []string
 
-	dump.P(host)
+	for _, prompt := range prompts {
+		result, _ := prompt.Run()
+
+		results = append(results, result)
+	}
+
+	dump.P(results)
 }
 
 func isNotBlank(val string) error {
