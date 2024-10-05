@@ -3,7 +3,7 @@ package cmd
 import (
 	"errors"
 
-	"github.com/gookit/goutil/dump"
+	db "github.com/lewissteele/dbat/internal"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
@@ -40,7 +40,9 @@ func run(cmd *cobra.Command, args []string) {
 		results = append(results, result)
 	}
 
-	dump.P(results)
+	host, username, password := results[0], results[1], results[2]
+
+	db.SaveConnection(host, username, password)
 }
 
 func isNotBlank(val string) error {
