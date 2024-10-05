@@ -1,40 +1,36 @@
-/*
-Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
-*/
 package cmd
 
 import (
-	"fmt"
+	"errors"
 
+	"github.com/gookit/goutil/dump"
+	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
 
-// addCmd represents the add command
-var addCmd = &cobra.Command{
-	Use:   "add",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("add called")
-	},
+func init() {
+	rootCmd.AddCommand(&cobra.Command{
+		Run:   run,
+		Short: "save database connection",
+		Use:   "add",
+	})
 }
 
-func init() {
-	rootCmd.AddCommand(addCmd)
+func run(cmd *cobra.Command, args []string) {
+	prompt := promptui.Prompt{
+		Label:    "host",
+		Validate: isNotBlank,
+	}
 
-	// Here you will define your flags and configuration settings.
+	host, _ := prompt.Run()
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// addCmd.PersistentFlags().String("foo", "", "A help for foo")
+	dump.P(host)
+}
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// addCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+func isNotBlank(val string) error {
+	if len(val) > 0 {
+		return nil
+	}
+
+	return errors.New("value cannot be blank")
 }
