@@ -23,8 +23,6 @@ func run(cmd *cobra.Command, args []string) {
 	}
 
 	host, _ := prompt.Run()
-
-	dump.P(host)
 }
 
 func isNotBlank(val string) error {
