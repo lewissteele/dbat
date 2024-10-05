@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type Database struct {
 	gorm.Model
-	Host string
+	Host     string
 	Username string
 	Password string
 }
