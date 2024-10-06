@@ -44,7 +44,7 @@ func run(cmd *cobra.Command, args []string) {
 	host, username, password := results[0], results[1], results[2]
 
 	db.LocalDB.Create(&model.Database{
-		Host: host,
+		Host:     host,
 		Username: username,
 		Password: password,
 	})

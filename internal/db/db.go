@@ -7,7 +7,6 @@ import (
 	"github.com/lewissteele/dbat/internal/model"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 )
 
 var LocalDB *gorm.DB
@@ -23,7 +22,8 @@ func init() {
 	path := filepath.Join(configHome, "dbat/dbat.db")
 
 	LocalDB, err = gorm.Open(sqlite.Open(path), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Silent),
+		//Logger: logger.Default.LogMode(logger.Silent),
+		//SkipDefaultTransaction: true,
 	})
 
 	if err != nil {
