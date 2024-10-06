@@ -3,7 +3,8 @@ package cmd
 import (
 	"errors"
 
-	db "github.com/lewissteele/dbat/internal"
+	"github.com/lewissteele/dbat/internal/db"
+	"github.com/lewissteele/dbat/internal/model"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
@@ -42,7 +43,11 @@ func run(cmd *cobra.Command, args []string) {
 
 	host, username, password := results[0], results[1], results[2]
 
-	db.SaveConnection(host, username, password)
+	db.LocalDB.Create(&model.Database{
+		Host: host,
+		Username: username,
+		Password: password,
+	})
 }
 
 func isNotBlank(val string) error {
