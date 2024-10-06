@@ -10,11 +10,7 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-var localDB *gorm.DB
-
-func SaveConnection(host string, username string, password string) {
-	localDB.Create(&model.Database{Host: "localhost", Username: "root", Password: ""})
-}
+var LocalDB *gorm.DB
 
 func init() {
 	configHome := os.Getenv("XDG_CONFIG_HOME")
@@ -23,8 +19,10 @@ func init() {
 		configHome = filepath.Join(os.Getenv("HOME"), ".config")
 	}
 
+	var err error
 	path := filepath.Join(configHome, "dbat/dbat.db")
-	conn, err := gorm.Open(sqlite.Open(path), &gorm.Config{
+
+	LocalDB, err = gorm.Open(sqlite.Open(path), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Silent),
 	})
 
@@ -32,7 +30,5 @@ func init() {
 		panic("could not connect to sqlite db")
 	}
 
-	conn.AutoMigrate(&model.Database{})
-
-	localDB = conn
+	LocalDB.AutoMigrate(&model.Database{})
 }
