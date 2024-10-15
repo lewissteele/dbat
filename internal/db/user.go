@@ -24,6 +24,19 @@ func GetUserDB(host string) *gorm.DB {
 	return userDB
 }
 
+func GetUserDBList() []string {
+	databases := []model.Database{}
+	LocalDB.Find(&databases)
+
+	var names []string
+
+	for _, db := range databases {
+		names = append(names, db.Host)
+	}
+
+	return names
+}
+
 func getDSN(host string) string {
 	db := model.Database{}
 
