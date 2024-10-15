@@ -4,9 +4,9 @@ import (
 	"fmt"
 
 	"github.com/c-bata/go-prompt"
+	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/lewissteele/dbat/internal/db"
 	"github.com/spf13/cobra"
-	"github.com/jedib0t/go-pretty/v6/table"
 )
 
 var connectCmd = &cobra.Command{
@@ -15,9 +15,7 @@ var connectCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		host := args[0]
-
 		db := db.GetUserDB(host)
-
 		sql := prompt.Input("> ", completer)
 
 		rows, err := db.Raw(sql).Rows()
@@ -35,6 +33,25 @@ var connectCmd = &cobra.Command{
 
 		t := table.NewWriter()
 		t.AppendHeader(headers)
+
+		var results []map[string]interface{}
+
+		db.ScanRows(rows, &results)
+
+		for idx, result := range results {
+			if idx == 0 {
+				continue
+			}
+
+			var values []interface{}
+
+			for _, value := range result {
+				values = append(values, value)
+			}
+
+			t.AppendRow(values)
+		}
+
 		fmt.Println(t.Render())
 	},
 }
