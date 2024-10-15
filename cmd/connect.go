@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/c-bata/go-prompt"
 	"github.com/jedib0t/go-pretty/v6/table"
@@ -10,54 +11,73 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var host string
+
 var connectCmd = &cobra.Command{
 	Use:   "connect",
 	Short: "connect to saved connection",
 	Run: func(cmd *cobra.Command, args []string) {
-		host := getHost(args)
-		db := db.GetUserDB(host)
-		sql := prompt.Input("> ", completer)
+		host = getHost(args)
 
-		rows, err := db.Raw(sql).Rows()
+		prompt := prompt.New(
+			executor,
+			completer,
+			prompt.OptionHistory([]string{"test"}),
+		)
 
-		if err != nil {
-			fmt.Println(err.Error())
-		}
-
-		columns, _ := rows.Columns()
-		var headers table.Row
-
-		for _, column := range columns {
-			headers = append(headers, column)
-		}
-
-		t := table.NewWriter()
-		t.AppendHeader(headers)
-
-		var results []map[string]interface{}
-
-		db.ScanRows(rows, &results)
-
-		for idx, result := range results {
-			if idx == 0 {
-				continue
-			}
-
-			var values []interface{}
-
-			for _, value := range result {
-				values = append(values, value)
-			}
-
-			t.AppendRow(values)
-		}
-
-		fmt.Println(t.Render())
+		prompt.Run()
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(connectCmd)
+}
+
+func executor(s string) {
+	if len(s) == 0 {
+		return
+	}
+
+	if s == "exit" {
+		os.Exit(0)
+	}
+
+	db := db.GetUserDB(host)
+	rows, err := db.Raw(s).Rows()
+
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	columns, _ := rows.Columns()
+	var headers table.Row
+
+	for _, column := range columns {
+		headers = append(headers, column)
+	}
+
+	t := table.NewWriter()
+	t.AppendHeader(headers)
+
+	var results []map[string]interface{}
+
+	db.ScanRows(rows, &results)
+
+	for idx, result := range results {
+		if idx == 0 {
+			continue
+		}
+
+		var values []interface{}
+
+		for _, value := range result {
+			values = append(values, value)
+		}
+
+		t.AppendRow(values)
+	}
+
+	fmt.Println(t.Render())
 }
 
 func completer(d prompt.Document) []prompt.Suggest {
@@ -70,10 +90,10 @@ func getHost(args []string) string {
 	}
 
 	prompt := promptui.Select{
+		Items: db.GetUserDBList(),
 		Label: "database",
-		Items: []string{"localhost"},
 	}
-	
+
 	_, host, err := prompt.Run()
 
 	if err != nil {
