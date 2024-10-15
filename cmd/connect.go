@@ -6,15 +6,15 @@ import (
 	"github.com/c-bata/go-prompt"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/lewissteele/dbat/internal/db"
+	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
 
 var connectCmd = &cobra.Command{
 	Use:   "connect",
 	Short: "connect to saved connection",
-	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		host := args[0]
+		host := getHost(args)
 		db := db.GetUserDB(host)
 		sql := prompt.Input("> ", completer)
 
@@ -62,4 +62,23 @@ func init() {
 
 func completer(d prompt.Document) []prompt.Suggest {
 	return []prompt.Suggest{}
+}
+
+func getHost(args []string) string {
+	if len(args) > 1 {
+		return args[0]
+	}
+
+	prompt := promptui.Select{
+		Label: "database",
+		Items: []string{"localhost"},
+	}
+	
+	_, host, err := prompt.Run()
+
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	return host
 }
