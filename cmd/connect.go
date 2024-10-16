@@ -42,7 +42,7 @@ func executor(s string) {
 		os.Exit(0)
 	}
 
-	db := db.GetUserDB(host)
+	db := db.UserDB(host)
 	rows, err := db.Raw(s).Rows()
 
 	if err != nil {
@@ -90,7 +90,7 @@ func getHost(args []string) string {
 	}
 
 	prompt := promptui.Select{
-		Items: db.GetUserDBList(),
+		Items: db.UserDBNames(),
 		Label: "database",
 	}
 
