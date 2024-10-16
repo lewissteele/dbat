@@ -4,7 +4,10 @@ import "gorm.io/gorm"
 
 type Database struct {
 	gorm.Model
-	Host     string
-	Username string
-	Password string
+	Driver string
+	Host   string
+	Name   string
+	Pass   string
+	Port   uint
+	User   string
 }
