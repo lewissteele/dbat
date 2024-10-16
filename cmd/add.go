@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/lewissteele/dbat/internal/db"
 	"github.com/lewissteele/dbat/internal/model"
@@ -41,12 +42,21 @@ func run(cmd *cobra.Command, args []string) {
 		results = append(results, result)
 	}
 
-	host, username, password := results[0], results[1], results[2]
+	host, user, pass := results[0], results[1], results[2]
+
+	driverSelect := promptui.Select{
+		Items: db.Drivers,
+		Label: "driver",
+	}
+
+	_, driver, _ := driverSelect.Run()
+
+	fmt.Println(driver)
 
 	db.LocalDB.Create(&model.Database{
-		Host:     host,
-		Username: username,
-		Password: password,
+		Host: host,
+		Pass: pass,
+		User: user,
 	})
 }
 
