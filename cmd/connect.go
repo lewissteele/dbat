@@ -17,7 +17,7 @@ var connectCmd = &cobra.Command{
 	Use:   "connect",
 	Short: "connect to saved connection",
 	Run: func(cmd *cobra.Command, args []string) {
-		host = getHost(args)
+		setHost(args)
 
 		prompt := prompt.New(
 			executor,
@@ -84,21 +84,17 @@ func completer(d prompt.Document) []prompt.Suggest {
 	return []prompt.Suggest{}
 }
 
-func getHost(args []string) string {
-	if len(args) > 1 {
-		return args[0]
+func setHost(args []string) {
+	if len(args) > 0 {
+		host = args[0]
+		return
 	}
 
 	prompt := promptui.Select{
-		Items: db.UserDBNames(),
-		Label: "database",
+		HideHelp: true,
+		Items:    db.UserDBNames(),
+		Label:    "database",
 	}
 
-	_, host, err := prompt.Run()
-
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	return host
+	_, host, _ = prompt.Run()
 }
