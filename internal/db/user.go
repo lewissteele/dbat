@@ -66,6 +66,6 @@ func dsn(name string) string {
 		db.Host,
 		":",
 		db.Port,
-		")/",
+		")/?parseTime=true",
 	}, "")
 }
