@@ -70,8 +70,8 @@ func executor(s string) {
 
 		var values []interface{}
 
-		for _, value := range result {
-			values = append(values, value)
+		for _, c := range columns {
+			values = append(values, result[c])
 		}
 
 		t.AppendRow(values)
