@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/lewissteele/dbat/internal/db"
 	"github.com/lewissteele/dbat/internal/model"
@@ -19,6 +18,19 @@ func init() {
 }
 
 func run(cmd *cobra.Command, args []string) {
+	selectDriver := promptui.Select{
+		Items: []db.Driver{
+			db.MariaDB,
+			db.MySQL,
+			db.PostgreSQL,
+			db.SQLite,
+		},
+		Label:    "driver",
+		HideHelp: true,
+	}
+
+	_, driver, _ := selectDriver.Run()
+
 	prompts := []promptui.Prompt{
 		promptui.Prompt{
 			Label:    "host",
@@ -29,8 +41,14 @@ func run(cmd *cobra.Command, args []string) {
 			Validate: isNotBlank,
 		},
 		promptui.Prompt{
-			HideEntered: true,
-			Label:       "password",
+			Label: "password",
+			Mask:  '*',
+		},
+		promptui.Prompt{
+			AllowEdit: true,
+			Default:   db.Port(db.Driver(driver)),
+			Label:     "port",
+			Validate:  isNotBlank,
 		},
 	}
 
@@ -42,21 +60,24 @@ func run(cmd *cobra.Command, args []string) {
 		results = append(results, result)
 	}
 
-	host, user, pass := results[0], results[1], results[2]
+	host, user, pass, port := results[0], results[1], results[2], results[3]
 
-	driverSelect := promptui.Select{
-		Items: db.Drivers,
-		Label: "driver",
+	promptName := promptui.Prompt{
+		AllowEdit: true,
+		Default:  host,
+		Label:    "name",
+		Validate: isNotBlank,
 	}
 
-	_, driver, _ := driverSelect.Run()
-
-	fmt.Println(driver)
+	name, _ := promptName.Run()
 
 	db.LocalDB.Create(&model.Database{
-		Host: host,
-		Pass: pass,
-		User: user,
+		Driver: driver,
+		Host:   host,
+		Name:   name,
+		Pass:   pass,
+		Port:   port,
+		User:   user,
 	})
 }
 
