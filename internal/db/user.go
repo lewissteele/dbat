@@ -1,7 +1,6 @@
 package db
 
 import (
-	"strconv"
 	"strings"
 
 	"github.com/lewissteele/dbat/internal/model"
@@ -9,15 +8,18 @@ import (
 	"gorm.io/gorm"
 )
 
-var Drivers = []string{
-	"mariadb",
-	"mysql",
-	"sqlite",
-}
+type Driver string
 
-func UserDB(host string) *gorm.DB {
+const (
+	MariaDB    Driver = "mariadb"
+	MySQL      Driver = "mysql"
+	PostgreSQL Driver = "postgresql"
+	SQLite     Driver = "sqlite"
+)
+
+func UserDB(name string) *gorm.DB {
 	userDB, err := gorm.Open(mysql.Open(
-		dsn(host)),
+		dsn(name)),
 		&gorm.Config{
 			//Logger: logger.Default.LogMode(logger.Silent),
 			SkipDefaultTransaction: true,
@@ -44,10 +46,17 @@ func UserDBNames() []string {
 	return names
 }
 
-func dsn(host string) string {
+func Port(driver Driver) string {
+	if driver == PostgreSQL {
+		return "5432"
+	}
+	return "3306"
+}
+
+func dsn(name string) string {
 	db := model.Database{}
 
-	LocalDB.Where("host = ?", host).First(&db)
+	LocalDB.Where("name = ?", name).First(&db)
 
 	return strings.Join([]string{
 		db.User,
@@ -56,7 +65,7 @@ func dsn(host string) string {
 		"@tcp(",
 		db.Host,
 		":",
-		strconv.FormatUint(uint64(db.Port), 10),
+		db.Port,
 		")/",
 	}, "")
 }

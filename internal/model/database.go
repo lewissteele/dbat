@@ -8,6 +8,6 @@ type Database struct {
 	Host   string
 	Name   string
 	Pass   string
-	Port   uint16
+	Port   string
 	User   string
 }
