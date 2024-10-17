@@ -15,7 +15,7 @@ var host string
 
 var connectCmd = &cobra.Command{
 	Use:   "connect",
-	Short: "connect to saved connection",
+	Short: "connect to saved database",
 	Run: func(cmd *cobra.Command, args []string) {
 		setHost(args)
 
