@@ -64,9 +64,9 @@ func run(cmd *cobra.Command, args []string) {
 
 	promptName := promptui.Prompt{
 		AllowEdit: true,
-		Default:  host,
-		Label:    "name",
-		Validate: isNotBlank,
+		Default:   host,
+		Label:     "name",
+		Validate:  isNotBlank,
 	}
 
 	name, _ := promptName.Run()
