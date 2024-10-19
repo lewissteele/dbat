@@ -31,5 +31,8 @@ func init() {
 		panic("could not connect to sqlite db")
 	}
 
-	LocalDB.AutoMigrate(&model.Database{})
+	LocalDB.AutoMigrate(
+		&model.Database{},
+		&model.History{},
+	)
 }
