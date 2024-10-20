@@ -7,8 +7,10 @@ import (
 	"github.com/c-bata/go-prompt"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/lewissteele/dbat/internal/db"
+	"github.com/lewissteele/dbat/internal/input"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
+	"image/color"
 )
 
 var host string
@@ -21,8 +23,12 @@ var connectCmd = &cobra.Command{
 
 		prompt := prompt.New(
 			executor,
-			completer,
+			input.Completer,
 			prompt.OptionHistory(db.History()),
+			prompt.OptionSelectedSuggestionBGColor(prompt.Color(color.Black.Y)),
+			prompt.OptionSelectedSuggestionTextColor(prompt.Color(color.White.Y)),
+			prompt.OptionSuggestionBGColor(prompt.Black),
+			prompt.OptionSuggestionTextColor(prompt.Color(color.White.Y)),
 		)
 
 		prompt.Run()
