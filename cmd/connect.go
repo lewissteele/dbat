@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/c-bata/go-prompt"
-	"github.com/gookit/goutil/dump"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/lewissteele/dbat/internal/db"
 	"github.com/manifoldco/promptui"
