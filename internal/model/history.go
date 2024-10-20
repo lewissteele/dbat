@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type History struct {
 	gorm.Model
-	Database Database
+	Database   Database
 	DatabaseID int `gorm:"index"`
-	Query string
+	Query      string
 }
