@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/c-bata/go-prompt"
+	"github.com/gookit/goutil/dump"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/lewissteele/dbat/internal/db"
 	"github.com/manifoldco/promptui"
@@ -47,6 +48,7 @@ func executor(s string) {
 
 	if err != nil {
 		fmt.Println(err.Error())
+		return
 	}
 
 	columns, _ := rows.Columns()
@@ -61,13 +63,16 @@ func executor(s string) {
 
 	var results []map[string]interface{}
 
-	userDB.ScanRows(rows, &results)
+	rows.Next()
 
-	for idx, result := range results {
-		if idx == 0 {
-			continue
-		}
+	err = userDB.ScanRows(rows, &results)
 
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	for _, result := range results {
 		var values []interface{}
 
 		for _, c := range columns {
