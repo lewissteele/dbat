@@ -34,7 +34,7 @@ func SaveHistory(query string, userDB string) {
 
 	history := model.History{
 		Database: database,
-		Query: query,
+		Query:    query,
 	}
 
 	LocalDB.Create(&history)

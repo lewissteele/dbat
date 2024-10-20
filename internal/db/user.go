@@ -3,11 +3,11 @@ package db
 import (
 	"strings"
 
-	"github.com/gookit/goutil/dump"
 	"github.com/lewissteele/dbat/internal/model"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 type Driver string
@@ -33,7 +33,7 @@ func UserDB(name string) *gorm.DB {
 	}
 
 	gormDB, err := gorm.Open(dialector, &gorm.Config{
-		//Logger: logger.Default.LogMode(logger.Silent),
+		Logger:                 logger.Default.LogMode(logger.Silent),
 		SkipDefaultTransaction: true,
 	})
 
