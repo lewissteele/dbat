@@ -4,7 +4,6 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/gookit/goutil/dump"
 	"github.com/lewissteele/dbat/internal/model"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
