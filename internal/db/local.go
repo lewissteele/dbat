@@ -33,8 +33,8 @@ func SaveHistory(query string, userDB string) {
 	LocalDB.First(&database)
 
 	history := model.History{
-		Query: query,
 		Database: database,
+		Query: query,
 	}
 
 	LocalDB.Create(&history)
