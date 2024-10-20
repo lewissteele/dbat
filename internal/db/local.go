@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/gookit/goutil/dump"
 	"github.com/lewissteele/dbat/internal/model"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -11,6 +12,19 @@ import (
 )
 
 var LocalDB *gorm.DB
+
+func History() []string {
+	var histories []model.History
+	var queries []string
+
+	LocalDB.Find(&histories)
+
+	for _, history := range histories {
+		queries = append(queries, history.Query)
+	}
+
+	return queries
+}
 
 func init() {
 	configHome := os.Getenv("XDG_CONFIG_HOME")

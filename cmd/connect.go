@@ -22,7 +22,7 @@ var connectCmd = &cobra.Command{
 		prompt := prompt.New(
 			executor,
 			completer,
-			prompt.OptionHistory([]string{"test"}),
+			prompt.OptionHistory(db.History()),
 		)
 
 		prompt.Run()
