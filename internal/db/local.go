@@ -25,6 +25,21 @@ func History() []string {
 	return queries
 }
 
+func SaveHistory(query string, userDB string) {
+	database := model.Database{
+		Name: userDB,
+	}
+
+	LocalDB.First(&database)
+
+	history := model.History{
+		Query: query,
+		Database: database,
+	}
+
+	LocalDB.Create(&history)
+}
+
 func init() {
 	configHome := os.Getenv("XDG_CONFIG_HOME")
 

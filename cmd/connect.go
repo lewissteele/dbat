@@ -42,8 +42,8 @@ func executor(s string) {
 		os.Exit(0)
 	}
 
-	db := db.UserDB(host)
-	rows, err := db.Raw(s).Rows()
+	userDB := db.UserDB(host)
+	rows, err := userDB.Raw(s).Rows()
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -61,7 +61,7 @@ func executor(s string) {
 
 	var results []map[string]interface{}
 
-	db.ScanRows(rows, &results)
+	userDB.ScanRows(rows, &results)
 
 	for idx, result := range results {
 		if idx == 0 {
@@ -78,6 +78,8 @@ func executor(s string) {
 	}
 
 	fmt.Println(t.Render())
+
+	go db.SaveHistory(s, host)
 }
 
 func completer(d prompt.Document) []prompt.Suggest {
