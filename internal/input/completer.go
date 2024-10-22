@@ -6,13 +6,6 @@ import (
 	"github.com/c-bata/go-prompt"
 )
 
-var keywords = []string{
-	"from",
-	"select",
-	"update",
-	"where",
-}
-
 func Completer(d prompt.Document) []prompt.Suggest {
 	s := []prompt.Suggest{}
 
@@ -21,7 +14,7 @@ func Completer(d prompt.Document) []prompt.Suggest {
 	}
 
 	for _, keyword := range keywords {
-		if strings.Contains(keyword, d.Text) {
+		if strings.Contains(keyword, strings.ToUpper(d.Text)) {
 			s = append(s, prompt.Suggest{
 				Text: keyword,
 			})
