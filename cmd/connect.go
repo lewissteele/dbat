@@ -23,7 +23,7 @@ var connectCmd = &cobra.Command{
 	Use:   "connect",
 	Short: "connect to saved database",
 	Run: func(cmd *cobra.Command, args []string) {
-		conn, userDB = db.UserDB(selectedDB(args))
+		userDB, conn = db.UserDB(selectedDB(args))
 
 		prompt := prompt.New(
 			executor,
@@ -93,7 +93,7 @@ func executor(query string) {
 
 	fmt.Println(t.Render())
 
-	go db.SaveHistory(query, userDB)
+	go db.SaveHistory(query, *userDB)
 }
 
 func completer(d prompt.Document) []prompt.Suggest {
