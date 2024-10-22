@@ -25,13 +25,7 @@ func History() []string {
 	return queries
 }
 
-func SaveHistory(query string, userDB string) {
-	database := model.Database{
-		Name: userDB,
-	}
-
-	LocalDB.First(&database)
-
+func SaveHistory(query string, database model.Database) {
 	history := model.History{
 		Database: database,
 		Query:    query,
