@@ -4,26 +4,31 @@ import (
 	"fmt"
 	"os"
 
+	"image/color"
+
 	"github.com/c-bata/go-prompt"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/lewissteele/dbat/internal/db"
 	"github.com/lewissteele/dbat/internal/input"
+	"github.com/lewissteele/dbat/internal/model"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
-	"image/color"
+	"gorm.io/gorm"
 )
 
-var host string
+var conn *gorm.DB
+var userDB *model.Database
 
 var connectCmd = &cobra.Command{
 	Use:   "connect",
 	Short: "connect to saved database",
 	Run: func(cmd *cobra.Command, args []string) {
-		setHost(args)
+		conn, userDB = db.UserDB(selectedDB(args))
 
 		prompt := prompt.New(
 			executor,
 			input.Completer,
+			prompt.OptionCompletionOnDown(),
 			prompt.OptionHistory(db.History()),
 			prompt.OptionSelectedSuggestionBGColor(prompt.Color(color.Black.Y)),
 			prompt.OptionSelectedSuggestionTextColor(prompt.Color(color.White.Y)),
@@ -39,17 +44,16 @@ func init() {
 	rootCmd.AddCommand(connectCmd)
 }
 
-func executor(s string) {
-	if len(s) == 0 {
+func executor(query string) {
+	if len(query) == 0 {
 		return
 	}
 
-	if s == "exit" {
+	if query == "exit" {
 		os.Exit(0)
 	}
 
-	userDB := db.UserDB(host)
-	rows, err := userDB.Raw(s).Rows()
+	rows, err := conn.Raw(query).Rows()
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -70,7 +74,7 @@ func executor(s string) {
 
 	rows.Next()
 
-	err = userDB.ScanRows(rows, &results)
+	err = conn.ScanRows(rows, &results)
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -89,17 +93,16 @@ func executor(s string) {
 
 	fmt.Println(t.Render())
 
-	go db.SaveHistory(s, host)
+	go db.SaveHistory(query, userDB)
 }
 
 func completer(d prompt.Document) []prompt.Suggest {
 	return []prompt.Suggest{}
 }
 
-func setHost(args []string) {
+func selectedDB(args []string) string {
 	if len(args) > 0 {
-		host = args[0]
-		return
+		return args[0]
 	}
 
 	prompt := promptui.Select{
@@ -108,5 +111,7 @@ func setHost(args []string) {
 		Label:    "database",
 	}
 
-	_, host, _ = prompt.Run()
+	_, name, _ := prompt.Run()
+
+	return name
 }
