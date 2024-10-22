@@ -19,7 +19,7 @@ const (
 	SQLite     Driver = "sqlite"
 )
 
-func UserDB(name string) *gorm.DB {
+func UserDB(name string) (*model.Database, *gorm.DB) {
 	var userDB model.Database
 	LocalDB.Where("name = ?", name).Find(&userDB)
 
@@ -32,7 +32,7 @@ func UserDB(name string) *gorm.DB {
 		dialector = mysql.Open(dsn(&userDB))
 	}
 
-	gormDB, err := gorm.Open(dialector, &gorm.Config{
+	conn, err := gorm.Open(dialector, &gorm.Config{
 		Logger:                 logger.Default.LogMode(logger.Silent),
 		SkipDefaultTransaction: true,
 	})
@@ -41,7 +41,7 @@ func UserDB(name string) *gorm.DB {
 		panic("could not connect")
 	}
 
-	return gormDB
+	return &userDB, conn
 }
 
 func UserDBNames() []string {
