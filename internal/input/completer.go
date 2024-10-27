@@ -10,7 +10,9 @@ func Completer(d prompt.Document) []prompt.Suggest {
 	words := strings.Split(d.Text, " ")
 	currentWord := words[len(words)-1]
 
-	s := []prompt.Suggest{}
+	s := []prompt.Suggest{
+		prompt.Suggest{Text: "exit"},
+	}
 
 	if len(strings.Trim(currentWord, "")) == 0 {
 		return s
