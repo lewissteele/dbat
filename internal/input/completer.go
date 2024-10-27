@@ -7,14 +7,17 @@ import (
 )
 
 func Completer(d prompt.Document) []prompt.Suggest {
+	words := strings.Split(d.Text, " ")
+	currentWord := words[len(words)-1]
+
 	s := []prompt.Suggest{}
 
-	if len(strings.Trim(d.Text, "")) == 0 {
+	if len(strings.Trim(currentWord, "")) == 0 {
 		return s
 	}
 
 	for _, keyword := range keywords {
-		if strings.Contains(keyword, strings.ToUpper(d.Text)) {
+		if strings.Contains(keyword, strings.ToUpper(currentWord)) {
 			s = append(s, prompt.Suggest{
 				Text: keyword,
 			})
