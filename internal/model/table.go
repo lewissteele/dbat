@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type Table struct {
 	gorm.Model
-	Database Database
+	Database   Database
 	DatabaseID int `gorm:"index"`
-	Name string
+	Name       string
 }
