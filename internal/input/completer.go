@@ -7,6 +7,7 @@ import (
 	"github.com/adrg/strutil"
 	"github.com/adrg/strutil/metrics"
 	"github.com/c-bata/go-prompt"
+	"github.com/gookit/goutil/dump"
 )
 
 func Completer(d prompt.Document) []prompt.Suggest {
@@ -19,13 +20,14 @@ func Completer(d prompt.Document) []prompt.Suggest {
 
 	words := strings.Split(d.Text, " ")
 	currentWord := words[len(words)-1]
+	metric := metrics.JaroWinkler{}
 
 	for _, keyword := range keywords {
 		if strings.Contains(keyword, currentWord) {
 			similarity := strutil.Similarity(
 				currentWord,
 				keyword,
-				metrics.NewLevenshtein(),
+				&metric,
 			)
 
 			m[similarity] = keyword
@@ -36,7 +38,8 @@ func Completer(d prompt.Document) []prompt.Suggest {
 	for k := range m {
 		keys = append(keys, k)
 	}
-	sort.Float64s(keys)
+
+	sort.Sort(sort.Reverse(sort.Float64Slice(keys)))
 
 	for _, k := range keys {
 		s = append(s, prompt.Suggest{
