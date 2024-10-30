@@ -7,7 +7,6 @@ import (
 	"github.com/adrg/strutil"
 	"github.com/adrg/strutil/metrics"
 	"github.com/c-bata/go-prompt"
-	"github.com/gookit/goutil/dump"
 )
 
 func Completer(d prompt.Document) []prompt.Suggest {
@@ -20,6 +19,11 @@ func Completer(d prompt.Document) []prompt.Suggest {
 
 	words := strings.Split(d.Text, " ")
 	currentWord := words[len(words)-1]
+
+	if len(strings.TrimSpace(currentWord)) == 0 {
+		return s
+	}
+
 	metric := metrics.JaroWinkler{}
 
 	for _, keyword := range keywords {
