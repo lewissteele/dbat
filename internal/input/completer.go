@@ -27,6 +27,10 @@ func Completer(d prompt.Document) []prompt.Suggest {
 	metric := metrics.JaroWinkler{}
 
 	for _, keyword := range keywords {
+		if keyword == currentWord {
+			return s
+		}
+
 		if strings.Contains(keyword, currentWord) {
 			similarity := strutil.Similarity(
 				currentWord,
