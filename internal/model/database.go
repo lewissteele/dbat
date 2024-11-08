@@ -18,6 +18,15 @@ type Database struct {
 	User   string
 }
 
+type Driver string
+
+const (
+	MariaDB    Driver = "mariadb"
+	MySQL      Driver = "mysql"
+	PostgreSQL Driver = "postgresql"
+	SQLite     Driver = "sqlite"
+)
+
 func (d Database) Conn() *gorm.DB {
 	conn, err := gorm.Open(
 		mysql.Open(d.dsn()),
