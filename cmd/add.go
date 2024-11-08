@@ -19,11 +19,11 @@ func init() {
 
 func run(cmd *cobra.Command, args []string) {
 	selectDriver := promptui.Select{
-		Items: []db.Driver{
-			db.MariaDB,
-			db.MySQL,
-			db.PostgreSQL,
-			db.SQLite,
+		Items: []model.Driver{
+			model.MariaDB,
+			model.MySQL,
+			model.PostgreSQL,
+			model.SQLite,
 		},
 		Label:    "driver",
 		HideHelp: true,
@@ -46,7 +46,7 @@ func run(cmd *cobra.Command, args []string) {
 		},
 		promptui.Prompt{
 			AllowEdit: true,
-			Default:   db.Port(db.Driver(driver)),
+			Default:   db.Port(model.Driver(driver)),
 			Label:     "port",
 			Validate:  isNotBlank,
 		},
@@ -72,7 +72,7 @@ func run(cmd *cobra.Command, args []string) {
 	name, _ := promptName.Run()
 
 	db.LocalDB.Create(&model.Database{
-		Driver: driver,
+		Driver: model.Driver(driver),
 		Host:   host,
 		Name:   name,
 		Pass:   pass,

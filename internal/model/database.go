@@ -11,7 +11,7 @@ import (
 
 type Database struct {
 	gorm.Model
-	Driver string
+	Driver Driver
 	Host   string
 	Name   string `gorm:"uniqueIndex"`
 	Pass   string
@@ -31,7 +31,7 @@ const (
 func (d Database) Conn() *gorm.DB {
 	var dialector gorm.Dialector
 
-	switch Driver(d.Driver) {
+	switch d.Driver {
 	case PostgreSQL:
 		dialector = postgres.Open(d.dsn())
 	default:
