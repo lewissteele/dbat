@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
@@ -28,8 +29,17 @@ const (
 )
 
 func (d Database) Conn() *gorm.DB {
+	var dialector gorm.Dialector
+
+	switch Driver(d.Driver) {
+	case PostgreSQL:
+		dialector = postgres.Open(d.dsn())
+	default:
+		dialector = mysql.Open(d.dsn())
+	}
+
 	conn, err := gorm.Open(
-		mysql.Open(d.dsn()),
+		dialector,
 		&gorm.Config{
 			Logger:                 logger.Default.LogMode(logger.Silent),
 			SkipDefaultTransaction: true,
@@ -43,6 +53,22 @@ func (d Database) Conn() *gorm.DB {
 }
 
 func (d Database) dsn() string {
+	if Driver(d.Driver) == PostgreSQL {
+		return strings.Join([]string{
+			"host=",
+			d.Host,
+			" ",
+			"user=",
+			d.User,
+			" ",
+			"password=",
+			d.Pass,
+			" ",
+			"port=",
+			d.Port,
+		}, "")
+	}
+
 	return strings.Join([]string{
 		d.User,
 		":",

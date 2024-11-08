@@ -1,47 +1,11 @@
 package db
 
-import (
-	"strings"
+import "github.com/lewissteele/dbat/internal/model"
 
-	"github.com/lewissteele/dbat/internal/model"
-	"gorm.io/driver/mysql"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
-)
-
-type Driver string
-
-const (
-	MariaDB    Driver = "mariadb"
-	MySQL      Driver = "mysql"
-	PostgreSQL Driver = "postgresql"
-	SQLite     Driver = "sqlite"
-)
-
-func UserDB(name string) (*model.Database, *gorm.DB) {
+func UserDB(name string) *model.Database {
 	var userDB model.Database
 	LocalDB.Where("name = ?", name).Find(&userDB)
-
-	var dialector gorm.Dialector
-
-	switch Driver(userDB.Driver) {
-	case PostgreSQL:
-		dialector = postgres.Open(dsn(&userDB))
-	default:
-		dialector = mysql.Open(dsn(&userDB))
-	}
-
-	conn, err := gorm.Open(dialector, &gorm.Config{
-		Logger:                 logger.Default.LogMode(logger.Silent),
-		SkipDefaultTransaction: true,
-	})
-
-	if err != nil {
-		panic("could not connect")
-	}
-
-	return &userDB, conn
+	return &userDB
 }
 
 func UserDBNames() []string {
@@ -57,38 +21,9 @@ func UserDBNames() []string {
 	return names
 }
 
-func Port(driver Driver) string {
-	if driver == PostgreSQL {
+func Port(driver model.Driver) string {
+	if driver == model.PostgreSQL {
 		return "5432"
 	}
 	return "3306"
-}
-
-func dsn(db *model.Database) string {
-	if Driver(db.Driver) == PostgreSQL {
-		return strings.Join([]string{
-			"host=",
-			db.Host,
-			" ",
-			"user=",
-			db.User,
-			" ",
-			"password=",
-			db.Pass,
-			" ",
-			"port=",
-			db.Port,
-		}, "")
-	}
-
-	return strings.Join([]string{
-		db.User,
-		":",
-		db.Pass,
-		"@tcp(",
-		db.Host,
-		":",
-		db.Port,
-		")/?parseTime=true",
-	}, "")
 }
