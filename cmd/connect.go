@@ -13,15 +13,18 @@ import (
 	"github.com/lewissteele/dbat/internal/model"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
+	"gorm.io/gorm"
 )
 
 var userDB *model.Database
+var conn *gorm.DB
 
 var connectCmd = &cobra.Command{
 	Use:   "connect",
 	Short: "connect to saved database",
 	Run: func(cmd *cobra.Command, args []string) {
 		userDB = db.UserDB(selectedDB(args))
+		conn = userDB.Conn()
 
 		prompt := prompt.New(
 			executor,
@@ -51,7 +54,6 @@ func executor(query string) {
 		os.Exit(0)
 	}
 
-	conn := userDB.Conn()
 	rows, err := conn.Raw(query).Rows()
 
 	if err != nil {
