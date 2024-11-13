@@ -10,21 +10,15 @@ import (
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/lewissteele/dbat/internal/db"
 	"github.com/lewissteele/dbat/internal/input"
-	"github.com/lewissteele/dbat/internal/model"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
-	"gorm.io/gorm"
 )
-
-var userDB *model.Database
-var conn *gorm.DB
 
 var connectCmd = &cobra.Command{
 	Use:   "connect",
 	Short: "connect to saved database",
 	Run: func(cmd *cobra.Command, args []string) {
-		userDB = db.UserDB(selectedDB(args))
-		conn = userDB.Conn()
+		db.Connect(selectedDB(args))
 
 		prompt := prompt.New(
 			executor,
@@ -54,7 +48,7 @@ func executor(query string) {
 		os.Exit(0)
 	}
 
-	rows, err := conn.Raw(query).Rows()
+	rows, err := db.Conn.Raw(query).Rows()
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -75,7 +69,7 @@ func executor(query string) {
 
 	rows.Next()
 
-	err = conn.ScanRows(rows, &results)
+	err = db.Conn.ScanRows(rows, &results)
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -94,7 +88,7 @@ func executor(query string) {
 
 	fmt.Println(t.Render())
 
-	go db.SaveHistory(query, *userDB)
+	go db.SaveHistory(query)
 }
 
 func completer(d prompt.Document) []prompt.Suggest {
