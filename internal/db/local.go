@@ -25,9 +25,9 @@ func History() []string {
 	return queries
 }
 
-func SaveHistory(query string, database model.Database) {
+func SaveHistory(query string) {
 	history := model.History{
-		Database: database,
+		Database: UserDB,
 		Query:    query,
 	}
 
