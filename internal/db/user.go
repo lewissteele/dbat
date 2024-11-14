@@ -13,6 +13,8 @@ import (
 var UserDB model.Database
 var Conn *gorm.DB
 
+var databaseNames []string
+
 func Connect(name string) (*gorm.DB, *model.Database) {
 	LocalDB.Where("name = ?", name).Find(&UserDB)
 
@@ -52,6 +54,32 @@ func UserDBNames() []string {
 	}
 
 	return names
+}
+
+func Databases() []string {
+	if databaseNames != nil {
+		return databaseNames
+	}
+
+	rows, err := Conn.Raw("show databases").Rows()
+
+	if err != nil {
+		panic("could not get databases")
+	}
+
+	var results []map[string]interface{}
+
+	rows.Next()
+	err = Conn.ScanRows(rows, &results)
+
+	for _, val := range results {
+		databaseNames = append(
+			databaseNames,
+			val["Database"].(string),
+		)
+	}
+
+	return databaseNames
 }
 
 func Port(d Driver) string {

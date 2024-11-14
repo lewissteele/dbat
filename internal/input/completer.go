@@ -7,6 +7,7 @@ import (
 	"github.com/adrg/strutil"
 	"github.com/adrg/strutil/metrics"
 	"github.com/c-bata/go-prompt"
+	"github.com/lewissteele/dbat/internal/db"
 )
 
 func Completer(d prompt.Document) []prompt.Suggest {
@@ -39,6 +40,22 @@ func Completer(d prompt.Document) []prompt.Suggest {
 			)
 
 			m[similarity] = keyword
+		}
+	}
+
+	for _, db := range db.Databases() {
+		if db == currentWord {
+			return s
+		}
+
+		if strings.Contains(db, currentWord) {
+			similarity := strutil.Similarity(
+				currentWord,
+				db,
+				&metric,
+			)
+
+			m[similarity] = db
 		}
 	}
 
