@@ -10,10 +10,9 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-var UserDB model.Database
 var Conn *gorm.DB
-
-var databaseNames []string
+var Databases []string
+var UserDB model.Database
 
 func Connect(name string) (*gorm.DB, *model.Database) {
 	LocalDB.Where("name = ?", name).Find(&UserDB)
@@ -40,6 +39,8 @@ func Connect(name string) (*gorm.DB, *model.Database) {
 		panic("could not connect")
 	}
 
+	go populateDatabases()
+
 	return Conn, &UserDB
 }
 
@@ -56,11 +57,14 @@ func UserDBNames() []string {
 	return names
 }
 
-func Databases() []string {
-	if databaseNames != nil {
-		return databaseNames
+func Port(d Driver) string {
+	if d == PostgreSQL {
+		return "5432"
 	}
+	return "3306"
+}
 
+func populateDatabases() {
 	rows, err := Conn.Raw("show databases").Rows()
 
 	if err != nil {
@@ -73,20 +77,11 @@ func Databases() []string {
 	err = Conn.ScanRows(rows, &results)
 
 	for _, val := range results {
-		databaseNames = append(
-			databaseNames,
+		Databases = append(
+			Databases,
 			val["Database"].(string),
 		)
 	}
-
-	return databaseNames
-}
-
-func Port(d Driver) string {
-	if d == PostgreSQL {
-		return "5432"
-	}
-	return "3306"
 }
 
 func dsn(d model.Database) string {

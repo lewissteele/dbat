@@ -43,7 +43,7 @@ func Completer(d prompt.Document) []prompt.Suggest {
 		}
 	}
 
-	for _, db := range db.Databases() {
+	for _, db := range db.Databases {
 		if db == currentWord {
 			return s
 		}

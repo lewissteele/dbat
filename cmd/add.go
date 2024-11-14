@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/charmbracelet/huh"
+	"github.com/gookit/goutil/dump"
 	"github.com/lewissteele/dbat/internal/db"
 	"github.com/lewissteele/dbat/internal/model"
 	"github.com/spf13/cobra"
@@ -29,7 +30,7 @@ func run(cmd *cobra.Command, args []string) {
 
 	form := huh.NewForm(
 		huh.NewGroup(
-			huh.NewSelect[string]().Title("driver").Options(
+			huh.NewSelect[string]().Title("driver").Value(&driver).Options(
 				huh.NewOption(string(db.MariaDB), string(db.MariaDB)),
 				huh.NewOption(string(db.MySQL), string(db.MySQL)),
 				huh.NewOption(string(db.PostgreSQL), string(db.PostgreSQL)),
@@ -43,6 +44,8 @@ func run(cmd *cobra.Command, args []string) {
 	if err != nil {
 		panic(err)
 	}
+
+	dump.P(driver)
 
 	// selectDriver := promptui.Select{
 	// 	Items: []db.Driver{
