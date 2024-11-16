@@ -14,7 +14,7 @@ var Conn *gorm.DB
 var Databases []string
 var UserDB model.Database
 
-func Connect(name string) (*gorm.DB, *model.Database) {
+func Connect(name string) {
 	LocalDB.Where("name = ?", name).Find(&UserDB)
 
 	var dialector gorm.Dialector
@@ -40,8 +40,6 @@ func Connect(name string) (*gorm.DB, *model.Database) {
 	}
 
 	go populateDatabases()
-
-	return Conn, &UserDB
 }
 
 func UserDBNames() []string {
