@@ -21,11 +21,11 @@ func init() {
 func run(cmd *cobra.Command, args []string) {
 	var (
 		driver string
-		host string
-		name string
-		pass string
-		port string
-		user string
+		host   string
+		name   string
+		pass   string
+		port   string
+		user   string
 	)
 
 	form := huh.NewForm(
