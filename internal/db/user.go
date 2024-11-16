@@ -3,6 +3,7 @@ package db
 import (
 	"strings"
 
+	"github.com/gookit/goutil/maputil"
 	"github.com/lewissteele/dbat/internal/model"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
@@ -12,9 +13,13 @@ import (
 
 var Conn *gorm.DB
 var Databases []string
+var Tables map[string][]string
 var UserDB model.Database
 
 func Connect(name string) {
+	Databases = []string{}
+	Tables = map[string][]string{}
+
 	LocalDB.Where("name = ?", name).Find(&UserDB)
 
 	var dialector gorm.Dialector
@@ -38,6 +43,9 @@ func Connect(name string) {
 	if err != nil {
 		panic("could not connect")
 	}
+
+	d, _ := Conn.DB()
+	d.SetMaxOpenConns(1)
 
 	go populateDatabases()
 }
@@ -75,11 +83,52 @@ func populateDatabases() {
 	err = Conn.ScanRows(rows, &results)
 
 	for _, val := range results {
+		d := val["Database"].(string)
+
 		Databases = append(
 			Databases,
-			val["Database"].(string),
+			d,
+		)
+
+		populateTables(d)
+	}
+}
+
+func populateTables(d string) {
+	t := Conn.Begin()
+	
+	t.Exec(strings.Join([]string{
+		"use ",
+		"`",
+		d,
+		"`",
+	}, ""))
+
+	rows, err := t.Raw("show tables").Rows()
+
+	if err != nil {
+		panic("could not get tables")
+	}
+
+	var results []map[string]interface{}
+
+	rows.Next()
+	err = Conn.ScanRows(rows, &results)
+
+	for _, val := range results {
+		v := maputil.Values(val)
+
+		if len(v) == 0 {
+			continue
+		}
+
+		Tables[d] = append(
+			Tables[d],
+			v[0].(string),
 		)
 	}
+
+	t.Rollback()
 }
 
 func dsn(d model.Database) string {
