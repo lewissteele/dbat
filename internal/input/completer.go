@@ -27,6 +27,14 @@ func Completer(d prompt.Document) []prompt.Suggest {
 
 	metric := metrics.JaroWinkler{}
 
+	if strings.Contains(currentWord, ".") {
+		split := strings.Split(currentWord, ".")
+
+		if len(split) > 1 {
+			return suggestions(split[1], db.Tables[split[0]])
+		}
+	}
+
 	for _, keyword := range keywords {
 		if keyword == currentWord {
 			return s
@@ -70,6 +78,43 @@ func Completer(d prompt.Document) []prompt.Suggest {
 		s = append(s, prompt.Suggest{
 			Text: m[k],
 		})
+	}
+
+	return s
+}
+
+func suggestions(needle string, haystack []string) []prompt.Suggest {
+	m := make(map[float64]string)
+	s := []prompt.Suggest{}
+	metric := metrics.JaroWinkler{}
+
+	for _, v := range haystack {
+		if needle == v {
+			return s
+		}
+
+		if strings.Contains(v, needle) {
+			similarity := strutil.Similarity(
+				needle,
+				v,
+				&metric,
+			)
+
+			m[similarity] = v
+		}
+
+		keys := make([]float64, 0, len(m))
+		for k := range m {
+			keys = append(keys, k)
+		}
+
+		sort.Sort(sort.Reverse(sort.Float64Slice(keys)))
+
+		for _, k := range keys {
+			s = append(s, prompt.Suggest{
+				Text: m[k],
+			})
+		}
 	}
 
 	return s
