@@ -11,7 +11,6 @@ import (
 )
 
 func Completer(d prompt.Document) []prompt.Suggest {
-	m := make(map[float64]string)
 	s := []prompt.Suggest{}
 
 	if len(strings.TrimSpace(d.Text)) == 0 {
@@ -25,65 +24,21 @@ func Completer(d prompt.Document) []prompt.Suggest {
 		return s
 	}
 
-	metric := metrics.JaroWinkler{}
-
 	if strings.Contains(currentWord, ".") {
 		split := strings.Split(currentWord, ".")
 
 		if len(split) > 1 {
-			return suggestions(split[1], db.Tables[split[0]])
+			return similarity(split[1], db.Tables[split[0]])
 		}
 	}
 
-	for _, keyword := range keywords {
-		if keyword == currentWord {
-			return s
-		}
-
-		if strings.Contains(keyword, currentWord) {
-			similarity := strutil.Similarity(
-				currentWord,
-				keyword,
-				&metric,
-			)
-
-			m[similarity] = keyword
-		}
-	}
-
-	for _, db := range db.Databases {
-		if db == currentWord {
-			return s
-		}
-
-		if strings.Contains(db, currentWord) {
-			similarity := strutil.Similarity(
-				currentWord,
-				db,
-				&metric,
-			)
-
-			m[similarity] = db
-		}
-	}
-
-	keys := make([]float64, 0, len(m))
-	for k := range m {
-		keys = append(keys, k)
-	}
-
-	sort.Sort(sort.Reverse(sort.Float64Slice(keys)))
-
-	for _, k := range keys {
-		s = append(s, prompt.Suggest{
-			Text: m[k],
-		})
-	}
+	s = append(s, similarity(currentWord, keywords[:])...)
+	s = append(s, similarity(currentWord, db.Databases)...)
 
 	return s
 }
 
-func suggestions(needle string, haystack []string) []prompt.Suggest {
+func similarity(needle string, haystack []string) []prompt.Suggest {
 	m := make(map[float64]string)
 	s := []prompt.Suggest{}
 	metric := metrics.JaroWinkler{}
@@ -102,19 +57,19 @@ func suggestions(needle string, haystack []string) []prompt.Suggest {
 
 			m[similarity] = v
 		}
+	}
 
-		keys := make([]float64, 0, len(m))
-		for k := range m {
-			keys = append(keys, k)
-		}
+	keys := make([]float64, 0, len(m))
+	for k := range m {
+		keys = append(keys, k)
+	}
 
-		sort.Sort(sort.Reverse(sort.Float64Slice(keys)))
+	sort.Sort(sort.Reverse(sort.Float64Slice(keys)))
 
-		for _, k := range keys {
-			s = append(s, prompt.Suggest{
-				Text: m[k],
-			})
-		}
+	for _, k := range keys {
+		s = append(s, prompt.Suggest{
+			Text: m[k],
+		})
 	}
 
 	return s
