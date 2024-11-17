@@ -96,7 +96,7 @@ func populateDatabases() {
 
 func populateTables(d string) {
 	t := Conn.Begin()
-	
+
 	t.Exec(strings.Join([]string{
 		"use ",
 		"`",
