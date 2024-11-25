@@ -1,6 +1,7 @@
 package input
 
 import (
+	"fmt"
 	"sort"
 	"strings"
 
@@ -27,8 +28,28 @@ func Completer(d prompt.Document) []prompt.Suggest {
 	if strings.Contains(currentWord, ".") {
 		split := strings.Split(currentWord, ".")
 
-		if len(split) > 1 {
-			return similarity(split[1], db.Tables[split[0]])
+		if len(split) >= 1 {
+			fmt.Println("did come in here")
+			database := split[0]
+			tables := db.Tables[split[0]]
+
+			sug := []string{}
+
+			for _, val := range tables {
+				sug = append(sug, strings.Join([]string{database, ".", val}, ""))
+			}
+
+			if len(split) == 1 {
+				for _, val := range sug {
+					s = append(s, prompt.Suggest{
+						Text: val,
+					})
+				}
+
+				return s
+			}
+
+			return similarity(split[1], sug)
 		}
 	}
 
