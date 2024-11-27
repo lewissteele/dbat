@@ -7,10 +7,10 @@ import (
 	"image/color"
 
 	"github.com/c-bata/go-prompt"
+	"github.com/charmbracelet/huh"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/lewissteele/dbat/internal/db"
 	"github.com/lewissteele/dbat/internal/input"
-	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
 
@@ -100,13 +100,27 @@ func selectedDB(args []string) string {
 		return args[0]
 	}
 
-	prompt := promptui.Select{
-		HideHelp: true,
-		Items:    db.UserDBNames(),
-		Label:    "database",
+	var name string
+
+	options := []huh.Option[string]{}
+
+	for _, n := range db.UserDBNames() {
+		options = append(options, huh.NewOption[string](n, n))
 	}
 
-	_, name, _ := prompt.Run()
+	form := huh.NewForm(
+		huh.NewGroup(
+			huh.NewSelect[string]().Title("database").Value(&name).Options(
+				options...
+			),
+		),
+	)
+
+	err := form.Run()
+
+	if err != nil {
+		panic(err)
+	}
 
 	return name
 }
