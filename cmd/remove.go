@@ -12,11 +12,8 @@ var removeCmd = &cobra.Command{
 	Use:   "remove",
 	Short: "remove database connection",
 	Run: func(cmd *cobra.Command, args []string) {
-		host := args[0]
-
-		db.LocalDB.Where("host = ?", host).Delete(&model.Database{})
-
-		fmt.Println("removed database connection", host)
+		db.LocalDB.Where("name = ?", selectedDB(args)).Delete(&model.Database{})
+		fmt.Println("removed database connection")
 	},
 }
 
