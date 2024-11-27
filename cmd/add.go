@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"errors"
-
 	"github.com/charmbracelet/huh"
 	"github.com/lewissteele/dbat/internal/db"
 	"github.com/lewissteele/dbat/internal/model"
@@ -57,12 +55,4 @@ func run(cmd *cobra.Command, args []string) {
 		Port:   port,
 		User:   user,
 	})
-}
-
-func isNotBlank(val string) error {
-	if len(val) > 0 {
-		return nil
-	}
-
-	return errors.New("value cannot be blank")
 }
