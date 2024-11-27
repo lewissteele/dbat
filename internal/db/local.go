@@ -35,22 +35,30 @@ func SaveHistory(query string) {
 }
 
 func init() {
-	configHome := os.Getenv("XDG_CONFIG_HOME")
+	config := os.Getenv("XDG_CONFIG_HOME")
 
-	if len(configHome) == 0 {
-		configHome = filepath.Join(os.Getenv("HOME"), ".config")
+	if len(config) == 0 {
+		config = filepath.Join(os.Getenv("HOME"), ".config")
 	}
 
-	var err error
-	path := filepath.Join(configHome, "dbat/dbat.db")
+	err := os.MkdirAll(
+		filepath.Join(config, "dbat"),
+		0700,
+	)
 
-	LocalDB, err = gorm.Open(sqlite.Open(path), &gorm.Config{
+	if err != nil {
+		panic("cannot create config dir")
+	}
+
+	db := filepath.Join(config, "dbat/dbat.db")
+
+	LocalDB, err = gorm.Open(sqlite.Open(db), &gorm.Config{
 		Logger:                 logger.Default.LogMode(logger.Silent),
 		SkipDefaultTransaction: true,
 	})
 
 	if err != nil {
-		panic("could not connect to sqlite db")
+		panic("cannot connect to dbat.db")
 	}
 
 	LocalDB.AutoMigrate(
