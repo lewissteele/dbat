@@ -3,23 +3,25 @@ module github.com/lewissteele/dbat
 go 1.23.0
 
 require (
+	github.com/adrg/strutil v0.3.1
 	github.com/c-bata/go-prompt v0.2.6
+	github.com/charmbracelet/huh v0.6.0
+	github.com/gookit/goutil v0.6.17
 	github.com/jedib0t/go-pretty/v6 v6.6.0
 	github.com/manifoldco/promptui v0.9.0
 	github.com/spf13/cobra v1.8.1
 	gorm.io/driver/mysql v1.5.7
+	gorm.io/driver/postgres v1.5.9
 	gorm.io/driver/sqlite v1.5.6
 	gorm.io/gorm v1.25.12
 )
 
 require (
-	github.com/adrg/strutil v0.3.1 // indirect
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
 	github.com/catppuccin/go v0.2.0 // indirect
 	github.com/charmbracelet/bubbles v0.20.0 // indirect
 	github.com/charmbracelet/bubbletea v1.1.0 // indirect
-	github.com/charmbracelet/huh v0.6.0 // indirect
 	github.com/charmbracelet/lipgloss v0.13.0 // indirect
 	github.com/charmbracelet/x/ansi v0.2.3 // indirect
 	github.com/charmbracelet/x/exp/strings v0.0.0-20240722160745-212f7b056ed0 // indirect
@@ -30,7 +32,6 @@ require (
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/gookit/color v1.5.4 // indirect
-	github.com/gookit/goutil v0.6.17 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
@@ -59,5 +60,4 @@ require (
 	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/sys v0.25.0 // indirect
 	golang.org/x/text v0.19.0 // indirect
-	gorm.io/driver/postgres v1.5.9 // indirect
 )
