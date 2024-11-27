@@ -4,7 +4,6 @@ import (
 	"errors"
 
 	"github.com/charmbracelet/huh"
-	"github.com/gookit/goutil/dump"
 	"github.com/lewissteele/dbat/internal/db"
 	"github.com/lewissteele/dbat/internal/model"
 	"github.com/spf13/cobra"
@@ -36,6 +35,11 @@ func run(cmd *cobra.Command, args []string) {
 				huh.NewOption(string(db.PostgreSQL), string(db.PostgreSQL)),
 				huh.NewOption(string(db.SQLite), string(db.SQLite)),
 			),
+			huh.NewInput().Title("host").Value(&host).Validate(isNotBlank),
+			huh.NewInput().Title("user").Value(&user).Validate(isNotBlank),
+			huh.NewInput().Title("pass").Value(&pass),
+			huh.NewInput().Title("port").Value(&port).Validate(isNotBlank),
+			huh.NewInput().Title("name").Value(&name).Validate(isNotBlank),
 		),
 	)
 
@@ -45,61 +49,6 @@ func run(cmd *cobra.Command, args []string) {
 		panic(err)
 	}
 
-	dump.P(driver)
-
-	// selectDriver := promptui.Select{
-	// 	Items: []db.Driver{
-	// 		db.MariaDB,
-	// 		db.MySQL,
-	// 		db.PostgreSQL,
-	// 		db.SQLite,
-	// 	},
-	// 	Label:    "driver",
-	// 	HideHelp: true,
-	// }
-	//
-	// _, driver, _ := selectDriver.Run()
-	//
-	// prompts := []promptui.Prompt{
-	// 	promptui.Prompt{
-	// 		Label:    "host",
-	// 		Validate: isNotBlank,
-	// 	},
-	// 	promptui.Prompt{
-	// 		Label:    "username",
-	// 		Validate: isNotBlank,
-	// 	},
-	// 	promptui.Prompt{
-	// 		Label: "password",
-	// 		Mask:  '*',
-	// 	},
-	// 	promptui.Prompt{
-	// 		AllowEdit: true,
-	// 		Default:   db.Port(db.Driver(driver)),
-	// 		Label:     "port",
-	// 		Validate:  isNotBlank,
-	// 	},
-	// }
-
-	// var results []string
-
-	// for _, prompt := range prompts {
-	// 	result, _ := prompt.Run()
-	//
-	// 	results = append(results, result)
-	// }
-
-	// host, user, pass, port := results[0], results[1], results[2], results[3]
-
-	// promptName := promptui.Prompt{
-	// 	AllowEdit: true,
-	// 	Default:   host,
-	// 	Label:     "name",
-	// 	Validate:  isNotBlank,
-	// }
-
-	// name, _ := promptName.Run()
-	//
 	db.LocalDB.Create(&model.Database{
 		Driver: driver,
 		Host:   host,
