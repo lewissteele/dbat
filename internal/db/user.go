@@ -1,9 +1,9 @@
 package db
 
 import (
+	"fmt"
 	"strings"
 
-	"github.com/gookit/goutil/maputil"
 	"github.com/lewissteele/dbat/internal/model"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
@@ -12,14 +12,9 @@ import (
 )
 
 var Conn *gorm.DB
-var Databases []string
-var Tables map[string][]string
 var UserDB model.Database
 
 func Connect(name string) {
-	Databases = []string{}
-	Tables = map[string][]string{}
-
 	LocalDB.Where("name = ?", name).Find(&UserDB)
 
 	var dialector gorm.Dialector
@@ -47,7 +42,9 @@ func Connect(name string) {
 	d, _ := Conn.DB()
 	d.SetMaxOpenConns(1)
 
-	go populateDatabases()
+	Select("api-search")
+
+	go cacheObjects()
 }
 
 func UserDBNames() []string {
@@ -63,6 +60,16 @@ func UserDBNames() []string {
 	return names
 }
 
+func Selected() string {
+	var database string
+	Conn.Raw("select database()").Scan(&database)
+	return database
+}
+
+func Select(d string) {
+	Conn.Exec(fmt.Sprintf("use `%s`", d))
+}
+
 func Port(d Driver) string {
 	if d == PostgreSQL {
 		return "5432"
@@ -70,66 +77,18 @@ func Port(d Driver) string {
 	return "3306"
 }
 
-func populateDatabases() {
-	rows, err := Conn.Raw("show databases").Rows()
+func dialector(u model.Database) gorm.Dialector {
+	var dialector gorm.Dialector
 
-	if err != nil {
-		panic("could not get databases")
+	switch Driver(UserDB.Driver) {
+	case PostgreSQL:
+		dialector = postgres.Open(dsn(UserDB))
+	default:
+		dialector = mysql.Open(dsn(UserDB))
 	}
 
-	var results []map[string]interface{}
-
-	rows.Next()
-	err = Conn.ScanRows(rows, &results)
-
-	for _, val := range results {
-		d := val["Database"].(string)
-
-		Databases = append(
-			Databases,
-			d,
-		)
-
-		populateTables(d)
-	}
-}
-
-func populateTables(d string) {
-	t := Conn.Begin()
-
-	t.Exec(strings.Join([]string{
-		"use ",
-		"`",
-		d,
-		"`",
-	}, ""))
-
-	rows, err := t.Raw("show tables").Rows()
-
-	if err != nil {
-		panic("could not get tables")
-	}
-
-	var results []map[string]interface{}
-
-	rows.Next()
-	err = Conn.ScanRows(rows, &results)
-
-	for _, val := range results {
-		v := maputil.Values(val)
-
-		if len(v) == 0 {
-			continue
-		}
-
-		Tables[d] = append(
-			Tables[d],
-			v[0].(string),
-		)
-	}
-
-	t.Rollback()
-}
+	return dialector
+} 
 
 func dsn(d model.Database) string {
 	if Driver(d.Driver) == PostgreSQL {
