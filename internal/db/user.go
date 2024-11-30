@@ -42,8 +42,6 @@ func Connect(name string) {
 	d, _ := Conn.DB()
 	d.SetMaxOpenConns(1)
 
-	Select("api-search")
-
 	go cacheObjects()
 }
 
