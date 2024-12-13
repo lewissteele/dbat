@@ -9,7 +9,6 @@ import (
 	"github.com/c-bata/go-prompt"
 	"github.com/lewissteele/dbat/internal/db"
 	"github.com/lewissteele/dbat/internal/input"
-	"github.com/lewissteele/dbat/internal/output"
 	"github.com/lewissteele/dbat/internal/table"
 	"github.com/spf13/cobra"
 )
