@@ -7,9 +7,9 @@ import (
 	"image/color"
 
 	"github.com/c-bata/go-prompt"
-	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/lewissteele/dbat/internal/db"
 	"github.com/lewissteele/dbat/internal/input"
+	"github.com/lewissteele/dbat/internal/output"
 	"github.com/spf13/cobra"
 )
 
@@ -38,56 +38,23 @@ func init() {
 	rootCmd.AddCommand(connectCmd)
 }
 
-func executor(query string) {
-	if len(query) == 0 {
+func executor(q string) {
+	if len(q) == 0 {
 		return
 	}
 
-	if query == "exit" {
+	if q == "exit" {
 		os.Exit(0)
 	}
 
-	rows, err := db.Conn.Raw(query).Rows()
+	results, err := db.Query(q)
 
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
 
-	columns, _ := rows.Columns()
-	var headers table.Row
-
-	for _, column := range columns {
-		headers = append(headers, column)
-	}
-
-	t := table.NewWriter()
-	t.AppendHeader(headers)
-
-	var results []map[string]interface{}
-
-	rows.Next()
-
-	err = db.Conn.ScanRows(rows, &results)
-
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-
-	for _, result := range results {
-		var values []interface{}
-
-		for _, c := range columns {
-			values = append(values, result[c])
-		}
-
-		t.AppendRow(values)
-	}
-
-	fmt.Println(t.Render())
-
-	go db.SaveHistory(query)
+	output.RenderTable(results)
 }
 
 func completer(d prompt.Document) []prompt.Suggest {

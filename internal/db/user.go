@@ -68,6 +68,17 @@ func Select(d string) {
 	Conn.Exec(fmt.Sprintf("use `%s`", d))
 }
 
+func Query(q string) ([]map[string]interface{}, error) {
+	if Conn == nil {
+		panic("no connection")
+	}
+
+	var results []map[string]interface{}
+	err := Conn.Raw(q).Scan(&results).Error
+
+	return results, err
+}
+
 func Port(d Driver) string {
 	if d == PostgreSQL {
 		return "5432"
