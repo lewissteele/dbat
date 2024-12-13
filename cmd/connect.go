@@ -55,6 +55,7 @@ func executor(q string) {
 	}
 
 	output.RenderTable(results)
+	db.SaveHistory(q)
 }
 
 func completer(d prompt.Document) []prompt.Suggest {
