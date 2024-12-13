@@ -54,6 +54,12 @@ func executor(q string) {
 		return
 	}
 
+	db.SaveHistory(q)
+
+	if len(results) == 0 {
+		return
+	}
+
 	output.RenderTable(results)
 	db.SaveHistory(q)
 }
