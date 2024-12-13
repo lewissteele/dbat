@@ -10,6 +10,7 @@ import (
 	"github.com/lewissteele/dbat/internal/db"
 	"github.com/lewissteele/dbat/internal/input"
 	"github.com/lewissteele/dbat/internal/output"
+	"github.com/lewissteele/dbat/internal/table"
 	"github.com/spf13/cobra"
 )
 
@@ -60,7 +61,7 @@ func executor(q string) {
 		return
 	}
 
-	output.RenderTable(results)
+	table.Render(results)
 	db.SaveHistory(q)
 }
 

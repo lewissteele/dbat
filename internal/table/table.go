@@ -1,11 +1,11 @@
-package output
+package table
 
 import (
 	"fmt"
 	"github.com/jedib0t/go-pretty/v6/table"
 )
 
-func RenderTable(d []map[string]interface{}) {
+func Render(d []map[string]interface{}) {
 	var headers table.Row
 
 	for k, _ := range d[0] {
