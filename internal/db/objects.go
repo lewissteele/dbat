@@ -21,7 +21,7 @@ func cacheObjects() {
 		&gorm.Config{
 			Logger:                 logger.Default.LogMode(logger.Silent),
 			SkipDefaultTransaction: true,
-	})
+		})
 
 	db, _ := cacheConn.DB()
 	db.SetMaxOpenConns(1)

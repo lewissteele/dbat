@@ -97,7 +97,7 @@ func dialector(u model.Database) gorm.Dialector {
 	}
 
 	return dialector
-} 
+}
 
 func dsn(d model.Database) string {
 	if Driver(d.Driver) == PostgreSQL {
