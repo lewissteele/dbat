@@ -80,6 +80,8 @@ func Query(q string) ([]map[string]interface{}, error) {
 	var results []map[string]interface{}
 	err := Conn.Raw(q).Scan(&results).Error
 
+	go updateSelected()
+
 	return results, err
 }
 
@@ -88,6 +90,11 @@ func Port(d Driver) string {
 		return "5432"
 	}
 	return "3306"
+}
+
+func updateSelected() {
+	UserDB.Database = Selected()
+	LocalDB.Save(UserDB)
 }
 
 func dialector(u model.Database) gorm.Dialector {
