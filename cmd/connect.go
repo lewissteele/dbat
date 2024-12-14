@@ -9,6 +9,7 @@ import (
 	"github.com/c-bata/go-prompt"
 	"github.com/lewissteele/dbat/internal/db"
 	"github.com/lewissteele/dbat/internal/input"
+	"github.com/lewissteele/dbat/internal/list"
 	"github.com/lewissteele/dbat/internal/table"
 	"github.com/spf13/cobra"
 )
@@ -17,7 +18,21 @@ var connectCmd = &cobra.Command{
 	Use:   "connect",
 	Short: "connect to saved database",
 	Run: func(cmd *cobra.Command, args []string) {
-		db.Connect(selectedDB(args))
+		var c string
+
+		if len(args) > 0 {
+			c = args[0]
+		}
+
+		if len(c) == 0 {
+			c = list.RenderConnectionSelection()
+		}
+
+		db.Connect(c)
+
+		if len(db.Selected()) == 0 {
+			db.Select(list.RenderDatabaseSelection())
+		}
 
 		prompt := prompt.New(
 			executor,

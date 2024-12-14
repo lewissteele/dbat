@@ -10,25 +10,50 @@ import (
 )
 
 var Columns []string
-var Databases []string
+var databases []string
 var Tables []string
 
-var cacheConn *gorm.DB
+func Databases() []string {
+	if len(databases) > 0 {
+		return databases
+	}
 
-func cacheObjects() {
-	cacheConn, _ = gorm.Open(
+	c := NewConn()
+	c.Raw("show databases").Scan(&databases)
+
+	for _, database := range databases {
+		if strings.Contains(database, "-") {
+			continue
+		}
+
+		databases = append(
+			databases,
+			database,
+		)
+	}
+
+	d, _ := c.DB()
+	d.Close()
+
+	return databases
+}
+
+func NewConn() *gorm.DB {
+	c, _ := gorm.Open(
 		dialector(UserDB),
 		&gorm.Config{
 			Logger:                 logger.Default.LogMode(logger.Silent),
 			SkipDefaultTransaction: true,
 		})
 
-	db, _ := cacheConn.DB()
-	db.SetMaxOpenConns(1)
+	d, _ := c.DB()
+	d.SetMaxOpenConns(1)
 
-	cacheDatabases()
+	return c
+}
 
-	for _, d := range Databases {
+func cacheObjects() {
+	for _, d := range Databases() {
 		cacheTables(d)
 	}
 
@@ -41,31 +66,14 @@ func cacheObjects() {
 
 	slices.Sort(Columns)
 	Columns = slices.Compact(Columns)
-
-	db.Close()
-}
-
-func cacheDatabases() {
-	var databases []string
-	cacheConn.Raw("show databases").Scan(&databases)
-
-	for _, database := range databases {
-		if strings.Contains(database, "-") {
-			continue
-		}
-
-		Databases = append(
-			Databases,
-			database,
-		)
-	}
 }
 
 func cacheTables(database string) {
-	cacheConn.Exec(fmt.Sprintf("use `%s`", database))
+	c := NewConn()
+	c.Exec(fmt.Sprintf("use `%s`", database))
 
 	var tables []string
-	cacheConn.Raw("show tables").Scan(&tables)
+	c.Raw("show tables").Scan(&tables)
 
 	for _, table := range tables {
 		if Selected() == database {
@@ -75,18 +83,26 @@ func cacheTables(database string) {
 
 		Tables = append(Tables, strings.Join([]string{database, table}, "."))
 	}
+
+	d, _ := c.DB()
+	d.Close()
 }
 
 func cacheColumns(table string) {
+	c := NewConn()
+
 	type column struct {
 		Field string
 	}
 	var columns []column
 
-	cacheConn.Exec(fmt.Sprintf("use `%s`", Selected()))
-	cacheConn.Raw("show columns from channels").Scan(&columns)
+	c.Exec(fmt.Sprintf("use `%s`", Selected()))
+	c.Raw("show columns from channels").Scan(&columns)
 
-	for _, c := range columns {
-		Columns = append(Columns, c.Field)
+	for _, column := range columns {
+		Columns = append(Columns, column.Field)
 	}
+
+	d, _ := c.DB()
+	d.Close()
 }
