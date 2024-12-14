@@ -70,6 +70,7 @@ func Selected() string {
 
 func Select(d string) {
 	Conn.Exec(fmt.Sprintf("use `%s`", d))
+	go updateSelected()
 }
 
 func Query(q string) ([]map[string]interface{}, error) {
