@@ -63,7 +63,3 @@ func executor(q string) {
 	table.Render(results)
 	db.SaveHistory(q)
 }
-
-func completer(d prompt.Document) []prompt.Suggest {
-	return []prompt.Suggest{}
-}
