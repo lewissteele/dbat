@@ -39,10 +39,14 @@ func Connect(name string) {
 		panic("could not connect")
 	}
 
+	go cacheObjects()
+
 	d, _ := Conn.DB()
 	d.SetMaxOpenConns(1)
 
-	go cacheObjects()
+	if len(UserDB.Database) > 0 {
+		Select(UserDB.Database)
+	}
 }
 
 func UserDBNames() []string {
