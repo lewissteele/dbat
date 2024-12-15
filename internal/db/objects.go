@@ -18,8 +18,7 @@ func Databases() []string {
 		return databases
 	}
 
-	c := NewConn()
-	c.Raw("show databases").Scan(&databases)
+	Conn.Raw("show databases").Scan(&databases)
 
 	for _, database := range databases {
 		if strings.Contains(database, "-") {
@@ -31,9 +30,6 @@ func Databases() []string {
 			database,
 		)
 	}
-
-	d, _ := c.DB()
-	d.Close()
 
 	return databases
 }
