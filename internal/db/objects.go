@@ -18,6 +18,10 @@ func Databases() []string {
 		return databases
 	}
 
+	if UserDB.Driver == string(SQLite) {
+		return databases
+	}
+
 	Conn.Raw("show databases").Scan(&databases)
 
 	for _, database := range databases {
