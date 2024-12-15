@@ -9,6 +9,7 @@ type Database struct {
 	Host     string
 	Name     string `gorm:"uniqueIndex"`
 	Pass     string
+	Path     string
 	Port     string
 	User     string
 }
