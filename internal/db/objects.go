@@ -127,4 +127,3 @@ func newConn() *gorm.DB {
 
 	return c
 }
-
