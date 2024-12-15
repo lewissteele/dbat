@@ -30,7 +30,7 @@ var connectCmd = &cobra.Command{
 
 		db.Connect(c)
 
-		if len(db.Selected()) == 0 {
+		if len(db.Selected()) == 0 && db.UserDB.Driver != string(db.SQLite) {
 			db.Select(list.RenderDatabaseSelection())
 		}
 
