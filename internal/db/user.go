@@ -7,6 +7,7 @@ import (
 	"github.com/lewissteele/dbat/internal/model"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
@@ -16,20 +17,10 @@ var UserDB model.Database
 
 func Connect(name string) {
 	LocalDB.Where("name = ?", name).Find(&UserDB)
-
-	var dialector gorm.Dialector
-
-	switch Driver(UserDB.Driver) {
-	case PostgreSQL:
-		dialector = postgres.Open(dsn(UserDB))
-	default:
-		dialector = mysql.Open(dsn(UserDB))
-	}
-
 	var err error
 
 	Conn, err = gorm.Open(
-		dialector,
+		dialector(UserDB),
 		&gorm.Config{
 			Logger:                 logger.Default.LogMode(logger.Silent),
 			SkipDefaultTransaction: true,
@@ -98,14 +89,16 @@ func updateSelected() {
 	LocalDB.Save(UserDB)
 }
 
-func dialector(u model.Database) gorm.Dialector {
+func dialector(d model.Database) gorm.Dialector {
 	var dialector gorm.Dialector
 
 	switch Driver(UserDB.Driver) {
+	case SQLite:
+		dialector = sqlite.Open(d.Path)
 	case PostgreSQL:
-		dialector = postgres.Open(dsn(UserDB))
+		dialector = postgres.Open(dsn(d))
 	default:
-		dialector = mysql.Open(dsn(UserDB))
+		dialector = mysql.Open(dsn(d))
 	}
 
 	return dialector
