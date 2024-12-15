@@ -7,6 +7,7 @@ import (
 	"github.com/lewissteele/dbat/internal/model"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 	"gorm.io/gorm/logger"
 )
 
@@ -65,4 +66,12 @@ func init() {
 		&model.Database{},
 		&model.History{},
 	)
+
+	dbat := model.Database{
+		Driver: "sqlite",
+		Name:   "dbat",
+		Path: db,
+	}
+
+	LocalDB.Clauses(clause.OnConflict{DoNothing: true}).Create(&dbat)
 }
