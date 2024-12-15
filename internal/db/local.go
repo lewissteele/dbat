@@ -70,7 +70,7 @@ func init() {
 	dbat := model.Database{
 		Driver: "sqlite",
 		Name:   "dbat",
-		Path: db,
+		Path:   db,
 	}
 
 	LocalDB.Clauses(clause.OnConflict{DoNothing: true}).Create(&dbat)

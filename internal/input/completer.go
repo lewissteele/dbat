@@ -26,7 +26,7 @@ func Completer(d prompt.Document) []prompt.Suggest {
 
 	s = append(s, similarity(currentWord, keywords[:])...)
 	s = append(s, similarity(currentWord, db.Columns)...)
-	s = append(s, similarity(currentWord, db.Tables)...)
+	s = append(s, similarity(currentWord, db.Tables())...)
 	s = append(s, similarity(currentWord, db.Databases())...)
 
 	return s
