@@ -58,15 +58,16 @@ func Tables() []string {
 	}
 
 	c := newConn()
+	selectedDatabase := Selected()
 
 	for _, database := range Databases() {
 		c.Exec(fmt.Sprintf("use `%s`", database))
 
-		var tables []string
-		c.Raw("show tables").Scan(&tables)
+		var t []string
+		c.Raw("show tables").Scan(&t)
 
-		for _, table := range tables {
-			if Selected() == database {
+		for _, table := range t {
+			if selectedDatabase == database {
 				tables = append(tables, table)
 				continue
 			}
