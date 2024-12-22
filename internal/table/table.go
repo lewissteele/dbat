@@ -35,15 +35,15 @@ func Render(d []map[string]interface{}) {
 }
 
 func ellipsis(s string, maxLen int) string {
-    runes := []rune(s)
+	runes := []rune(s)
 
-    if len(runes) <= maxLen {
-        return s
-    }
+	if len(runes) <= maxLen {
+		return s
+	}
 
-    if maxLen < 3 {
-        maxLen = 3
-    }
+	if maxLen < 3 {
+		maxLen = 3
+	}
 
-    return string(runes[0:maxLen-3]) + "..."
+	return string(runes[0:maxLen-3]) + "..."
 }
