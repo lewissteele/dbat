@@ -3,7 +3,6 @@ package table
 import (
 	"fmt"
 	"github.com/gosuri/uitable"
-	"github.com/jedib0t/go-pretty/v6/table"
 )
 
 func Render(d []map[string]interface{}) {
@@ -11,7 +10,7 @@ func Render(d []map[string]interface{}) {
 	t.MaxColWidth = 80
 	t.Wrap = false
 
-	var headers table.Row
+	var headers []interface{}
 	for k, _ := range d[0] {
 		headers = append(headers, k)
 	}

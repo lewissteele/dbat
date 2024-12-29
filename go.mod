@@ -7,7 +7,6 @@ require (
 	github.com/c-bata/go-prompt v0.2.6
 	github.com/charmbracelet/huh v0.6.0
 	github.com/gosuri/uitable v0.0.4
-	github.com/jedib0t/go-pretty/v6 v6.6.0
 	github.com/spf13/cobra v1.8.1
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/driver/postgres v1.5.9
