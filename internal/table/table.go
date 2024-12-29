@@ -2,8 +2,8 @@ package table
 
 import (
 	"fmt"
-	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/gosuri/uitable"
+	"github.com/jedib0t/go-pretty/v6/table"
 )
 
 func Render(d []map[string]interface{}) {
@@ -27,4 +27,3 @@ func Render(d []map[string]interface{}) {
 
 	fmt.Println(t)
 }
-
