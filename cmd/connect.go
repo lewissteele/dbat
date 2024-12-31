@@ -69,8 +69,6 @@ func executor(q string) {
 		return
 	}
 
-	db.SaveHistory(q)
-
 	if len(results) == 0 {
 		return
 	}
