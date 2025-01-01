@@ -6,7 +6,7 @@ require (
 	github.com/adrg/strutil v0.3.1
 	github.com/c-bata/go-prompt v0.2.6
 	github.com/charmbracelet/huh v0.6.0
-	github.com/gosuri/uitable v0.0.4
+	github.com/fatih/color v1.18.0
 	github.com/spf13/cobra v1.8.1
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/driver/postgres v1.5.9
@@ -27,7 +27,6 @@ require (
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
-	github.com/fatih/color v1.18.0 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
