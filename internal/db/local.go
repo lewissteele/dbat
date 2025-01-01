@@ -17,7 +17,7 @@ func History() []string {
 	var histories []model.History
 	var queries []string
 
-	LocalDB.Order("updated_at").Find(&histories)
+	LocalDB.Order("updated_at").Where("database_id = ?", UserDB.ID).Find(&histories)
 
 	for _, history := range histories {
 		queries = append(queries, history.Query)
