@@ -32,7 +32,9 @@ func SaveHistory(query string) {
 		Query:    query,
 	}
 
-	err := LocalDB.Create(&history).Error
+	err := LocalDB.Clauses(clause.OnConflict{
+		DoUpdates: clause.AssignmentColumns([]string{"updated_at"}),
+	}).Create(&history).Error
 
 	if err != nil {
 		panic(err)
