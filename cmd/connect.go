@@ -38,6 +38,7 @@ var connectCmd = &cobra.Command{
 			executor,
 			input.Completer,
 			prompt.OptionCompletionOnDown(),
+			prompt.OptionCompletionWordSeparator(" "),
 			prompt.OptionHistory(db.History()),
 			prompt.OptionSelectedSuggestionBGColor(prompt.Color(color.Black.Y)),
 			prompt.OptionSelectedSuggestionTextColor(prompt.Color(color.White.Y)),
@@ -69,10 +70,11 @@ func executor(q string) {
 		return
 	}
 
+	go db.SaveHistory(q)
+
 	if len(results) == 0 {
 		return
 	}
 
 	table.Render(results)
-	db.SaveHistory(q)
 }
