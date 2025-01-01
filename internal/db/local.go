@@ -32,7 +32,11 @@ func SaveHistory(query string) {
 		Query:    query,
 	}
 
-	LocalDB.Create(&history)
+	err := LocalDB.Create(&history).Error
+
+	if err != nil {
+		panic(err)
+	}
 }
 
 func init() {
