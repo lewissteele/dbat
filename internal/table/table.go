@@ -2,27 +2,55 @@ package table
 
 import (
 	"fmt"
-	"github.com/gosuri/uitable"
+	"sort"
+	"strings"
+
+	"github.com/fatih/color"
 )
 
-func Render(d []map[string]interface{}) {
-	t := uitable.New()
-	t.MaxColWidth = 80
-	t.Wrap = false
-
-	var headers []interface{}
-	for k, _ := range d[0] {
-		headers = append(headers, k)
+func Render(data []map[string]interface{}) {
+	var columns []string
+	for key, _ := range data[0] {
+		columns = append(columns, key)
 	}
 
-	for _, row := range d {
-		for _, header := range headers {
-			k := header.(string)
-			t.AddRow(k, row[k])
+	if len(columns) == 1 {
+		for _, row := range data {
+			for _, column := range columns {
+				fmt.Println(row[column])
+			}
+		}
+		return
+	}
+
+	sort.Slice(columns, func(a, b int) bool {
+		return len(columns[a]) < len(columns[b])
+	})
+
+	padding := 0
+	for _, s := range columns {
+		l := len(s)
+		if l > padding {
+			padding = l
+		}
+	}
+
+	for idx, row := range data {
+		for _, column := range columns {
+			if len(columns) == 1 {
+				fmt.Println(row[column])
+				continue
+			}
+
+			color.Set(color.FgGreen)
+			fmt.Printf("%*s", padding, column)
+
+			color.Set(color.Reset)
+			fmt.Println("", row[column])
 		}
 
-		t.AddRow("")
+		if len(data)-1 != idx {
+			fmt.Println(strings.Repeat("-", 80))
+		}
 	}
-
-	fmt.Println(t)
 }
