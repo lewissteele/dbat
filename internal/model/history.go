@@ -5,6 +5,6 @@ import "gorm.io/gorm"
 type History struct {
 	gorm.Model
 	Database   Database
-	DatabaseID int `gorm:"index"`
-	Query      string
+	DatabaseID int    `gorm:"uniqueIndex:idx_histories"`
+	Query      string `gorm:"uniqueIndex:idx_histories"`
 }
