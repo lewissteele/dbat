@@ -44,6 +44,7 @@ var connectCmd = &cobra.Command{
 			prompt.OptionSelectedSuggestionTextColor(prompt.Color(color.White.Y)),
 			prompt.OptionSuggestionBGColor(prompt.Black),
 			prompt.OptionSuggestionTextColor(prompt.Color(color.White.Y)),
+			prompt.OptionPrefix(fmt.Sprintf("%s ", db.Selected())),
 		)
 
 		prompt.Run()
