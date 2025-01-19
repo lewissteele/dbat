@@ -70,7 +70,11 @@ func Query(q string) ([]map[string]interface{}, error) {
 	}
 
 	var results []map[string]interface{}
-	err := Conn.Raw(q).Scan(&results).Error
+	r := Conn.Raw(q).Scan(&results)
+
+	fmt.Println(r.Logger)
+
+	err := r.Error
 
 	go updateSelected()
 
