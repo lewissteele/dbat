@@ -4,6 +4,7 @@
     "npm:@tauri-apps/api@2": "2.2.0",
     "npm:@tauri-apps/cli@2": "2.2.5",
     "npm:@tauri-apps/plugin-opener@2": "2.2.4",
+    "npm:@tauri-apps/plugin-sql@2.2": "2.2.0",
     "npm:@vitejs/plugin-vue@^5.2.1": "5.2.1_vite@6.0.7_vue@3.5.13__typescript@5.6.3_typescript@5.6.3",
     "npm:typescript@~5.6.2": "5.6.3",
     "npm:vite@^6.0.3": "6.0.7",
@@ -215,6 +216,12 @@
     },
     "@tauri-apps/plugin-opener@2.2.4": {
       "integrity": "sha512-5oXWr80ek8JHwQ/budIdZTHAWBF4XfYMiXIyH8Pr92QtwEG+6xCgCcws0k4xCemVDEetclveJPu8yB9ysuU/dQ==",
+      "dependencies": [
+        "@tauri-apps/api"
+      ]
+    },
+    "@tauri-apps/plugin-sql@2.2.0": {
+      "integrity": "sha512-yGdybpaMENe/p6lTXslvDHYNNvD9qB7palaBBF5fJHdYSkwd3vrLiYU9dFfLwUAwnsBylND55EiivWsjhazejA==",
       "dependencies": [
         "@tauri-apps/api"
       ]
@@ -500,6 +507,7 @@
         "npm:@tauri-apps/api@2",
         "npm:@tauri-apps/cli@2",
         "npm:@tauri-apps/plugin-opener@2",
+        "npm:@tauri-apps/plugin-sql@2.2",
         "npm:@vitejs/plugin-vue@^5.2.1",
         "npm:typescript@~5.6.2",
         "npm:vite@^6.0.3",
