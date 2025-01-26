@@ -7,6 +7,7 @@
     "npm:@tauri-apps/plugin-sql@2.2": "2.2.0",
     "npm:@vitejs/plugin-vue@^5.2.1": "5.2.1_vite@6.0.7_vue@3.5.13__typescript@5.6.3_typescript@5.6.3",
     "npm:naive-ui@^2.41.0": "2.41.0_vue@3.5.13__typescript@5.6.3_css-render@0.15.14_date-fns@3.6.0_typescript@5.6.3",
+    "npm:pinia@^2.3.1": "2.3.1_typescript@5.6.3_vue@3.5.13__typescript@5.6.3",
     "npm:typescript@~5.6.2": "5.6.3",
     "npm:vite@^6.0.3": "6.0.7",
     "npm:vue-router@^4.5.0": "4.5.0_vue@3.5.13__typescript@5.6.3_typescript@5.6.3",
@@ -523,6 +524,15 @@
     "picocolors@1.1.1": {
       "integrity": "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA=="
     },
+    "pinia@2.3.1_typescript@5.6.3_vue@3.5.13__typescript@5.6.3": {
+      "integrity": "sha512-khUlZSwt9xXCaTbbxFYBKDc/bWAGWJjOgvxETwkTN7KRm66EeT1ZdZj6i2ceh9sP2Pzqsbc704r2yngBrxBVug==",
+      "dependencies": [
+        "@vue/devtools-api",
+        "typescript",
+        "vue",
+        "vue-demi"
+      ]
+    },
     "postcss@8.5.1": {
       "integrity": "sha512-6oz2beyjc5VMn/KV1pPw8fliQkhBXrVn1Z3TVyqZxU8kZpzEKhBdmCFqI6ZbmGtamQvQGuU1sgPTk8ZrXDD7jQ==",
       "dependencies": [
@@ -595,6 +605,12 @@
     "vscode-uri@3.0.8": {
       "integrity": "sha512-AyFQ0EVmsOZOlAnxoFOGOq1SQDWAB7C6aqMGS23svWAllfOaxbuFvcT8D1i8z3Gyn8fraVeZNNmN6e9bxxXkKw=="
     },
+    "vue-demi@0.14.10_vue@3.5.13__typescript@5.6.3_typescript@5.6.3": {
+      "integrity": "sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==",
+      "dependencies": [
+        "vue"
+      ]
+    },
     "vue-router@4.5.0_vue@3.5.13__typescript@5.6.3_typescript@5.6.3": {
       "integrity": "sha512-HDuk+PuH5monfNuY+ct49mNmkCRK4xJAV9Ts4z9UFc4rzdDnxQLyCMGGc8pKhZhHTVzfanpNwB/lwqevcBwI4w==",
       "dependencies": [
@@ -644,6 +660,7 @@
         "npm:@tauri-apps/plugin-sql@2.2",
         "npm:@vitejs/plugin-vue@^5.2.1",
         "npm:naive-ui@^2.41.0",
+        "npm:pinia@^2.3.1",
         "npm:typescript@~5.6.2",
         "npm:vite@^6.0.3",
         "npm:vue-router@^4.5.0",
