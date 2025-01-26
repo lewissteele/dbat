@@ -2,6 +2,8 @@
 import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/core";
 import { RouterView } from "vue-router";
+import { useDatabaseStore } from "./stores/database";
+import router from "./router";
 
 const greetMsg = ref("");
 const name = ref("");
@@ -10,10 +12,17 @@ async function greet() {
   // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
   greetMsg.value = await invoke("greet", { name: name.value });
 }
+
+const db = useDatabaseStore();
+
+if (!db.hasConnection) {
+  router.push("/setup");
+}
 </script>
 
 <template>
   <main>
+    app
     <RouterView></RouterView>
   </main>
 </template>
