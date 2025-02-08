@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { invoke } from "@tauri-apps/api/core";
-import { RouterView } from "vue-router";
-import { useDatabaseStore } from "./stores";
 import router from "./router";
+import { NConfigProvider, darkTheme } from "naive-ui";
+import { RouterView } from "vue-router";
+import { invoke } from "@tauri-apps/api/core";
+import { ref } from "vue";
+import { useDatabaseStore } from "./stores";
 
 const greetMsg = ref("");
 const name = ref("");
@@ -21,10 +22,10 @@ if (!db.hasConnection) {
 </script>
 
 <template>
-  <main>
-    app
-    <RouterView></RouterView>
-  </main>
+    <n-config-provider :theme="darkTheme">
+        app
+        <RouterView></RouterView>
+    </n-config-provider>
 </template>
 
 <style scoped>
