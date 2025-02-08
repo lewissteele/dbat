@@ -15,7 +15,7 @@
 
   function handle() {
     db.save(conn);
-    router.push("/");
+    router.replace("/");
 
     console.log(db.connections);
   }
