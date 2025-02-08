@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/core";
 import { RouterView } from "vue-router";
-import { useDatabaseStore } from "./stores/database";
+import { useDatabaseStore } from "./stores";
 import router from "./router";
 
 const greetMsg = ref("");
