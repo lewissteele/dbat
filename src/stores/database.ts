@@ -15,4 +15,7 @@ export const useDatabaseStore = defineStore("database", {
       this.connections.push(connection);
     },
   },
+  tauri: {
+    saveOnChange: true,
+  },
 });

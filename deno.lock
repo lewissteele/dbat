@@ -8,6 +8,7 @@
     "npm:@vitejs/plugin-vue@^5.2.1": "5.2.1_vite@6.1.0_vue@3.5.13__typescript@5.6.3_typescript@5.6.3",
     "npm:naive-ui@^2.41.0": "2.41.0_vue@3.5.13__typescript@5.6.3_css-render@0.15.14_date-fns@3.6.0_typescript@5.6.3",
     "npm:pinia@^2.3.1": "2.3.1_typescript@5.6.3_vue@3.5.13__typescript@5.6.3",
+    "npm:tauri-plugin-pinia@1.1.2": "1.1.2_typescript@5.6.3_vue@3.5.13__typescript@5.6.3",
     "npm:typescript@~5.6.2": "5.6.3",
     "npm:vite@^6.1.0": "6.1.0",
     "npm:vue-router@^4.5.0": "4.5.0_vue@3.5.13__typescript@5.6.3_typescript@5.6.3",
@@ -243,6 +244,12 @@
     },
     "@tauri-apps/plugin-sql@2.2.0": {
       "integrity": "sha512-yGdybpaMENe/p6lTXslvDHYNNvD9qB7palaBBF5fJHdYSkwd3vrLiYU9dFfLwUAwnsBylND55EiivWsjhazejA==",
+      "dependencies": [
+        "@tauri-apps/api"
+      ]
+    },
+    "@tauri-store/shared@0.4.2": {
+      "integrity": "sha512-1oi/kMzyAdd9H+mpvzff4HQfjQHbVCmYQ3RG01HZGSfhl8sRyISlkorg2IapgLLP1PUTxbblCT4Llp/FPhbkEg==",
       "dependencies": [
         "@tauri-apps/api"
       ]
@@ -573,6 +580,15 @@
     "source-map-js@1.2.1": {
       "integrity": "sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA=="
     },
+    "tauri-plugin-pinia@1.1.2_typescript@5.6.3_vue@3.5.13__typescript@5.6.3": {
+      "integrity": "sha512-gBoqhE7odrqd4+Q47lEMK6lDSZRvNHaZwch8a3boXw+9tVFI+qZsmwSLYvPxVOSTXZoNc3cWdx4ZgeFx9VyE4A==",
+      "dependencies": [
+        "@tauri-apps/api",
+        "@tauri-store/shared",
+        "pinia",
+        "vue"
+      ]
+    },
     "treemate@0.3.11": {
       "integrity": "sha512-M8RGFoKtZ8dF+iwJfAJTOH/SM4KluKOKRJpjCMhI8bG3qB74zrFoArKZ62ll0Fr3mqkMJiQOmWYkdYgDeITYQg=="
     },
@@ -661,6 +677,7 @@
         "npm:@vitejs/plugin-vue@^5.2.1",
         "npm:naive-ui@^2.41.0",
         "npm:pinia@^2.3.1",
+        "npm:tauri-plugin-pinia@1.1.2",
         "npm:typescript@~5.6.2",
         "npm:vite@^6.1.0",
         "npm:vue-router@^4.5.0",
