@@ -5,11 +5,13 @@ import { createPinia } from "pinia";
 import { createPlugin } from "tauri-plugin-pinia";
 import { useDatabaseStore } from "./stores";
 
-const app = createApp(App);
+(async () => {
+  const app = createApp(App);
 
-app.use(router);
-app.use(createPinia().use(createPlugin()));
+  app.use(router);
+  app.use(createPinia().use(createPlugin()));
 
-await useDatabaseStore().$tauri.start();
+  await useDatabaseStore().$tauri.start();
 
-app.mount("#app");
+  app.mount("#app");
+})();
