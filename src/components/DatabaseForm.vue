@@ -15,16 +15,15 @@
 
   function handle() {
     db.save(conn);
-    router.replace("/");
 
-    console.log(db.connections);
+    router.replace("/");
   }
 </script>
 
 <template>
   <n-flex justify="center">
     <n-form>
-      <h2>Create MySQL Connection</h2>
+      <h2>MySQL Connection</h2>
       <n-form>
         <n-form-item label="Hostname">
           <n-input v-model="conn.host" type="text" placeholder="localhost" />
