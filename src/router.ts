@@ -7,19 +7,19 @@ export default createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: "/",
-      name: "main",
       component: MainView,
+      name: "main",
+      path: "/",
     },
     {
-      path: "/setup",
-      name: "setup",
       component: SetupView,
+      name: "setup",
+      path: "/setup",
     },
     {
-      path: "/connections",
-      name: "connections",
       component: ConnectionsView,
+      name: "connections",
+      path: "/connections",
     },
   ],
 });
