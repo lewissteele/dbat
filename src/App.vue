@@ -1,14 +1,6 @@
 <script setup lang="ts">
-import router from "./router";
 import { NConfigProvider, darkTheme } from "naive-ui";
 import { RouterView } from "vue-router";
-import { useDatabaseStore } from "./stores";
-
-const db = useDatabaseStore();
-
-if (db.connections.length == 0) {
-  router.replace("/setup");
-}
 </script>
 
 <template>

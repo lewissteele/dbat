@@ -11,7 +11,15 @@ import { useDatabaseStore } from "./stores";
   app.use(router);
   app.use(createPinia().use(createPlugin()));
 
-  await useDatabaseStore().$tauri.start();
+  const db = useDatabaseStore();
+  await db.$tauri.start();
 
   app.mount("#app");
+
+  if (db.connections) {
+    router.replace({ name: "connections" });
+    return;
+  }
+
+  router.replace({ name: "setup" });
 })();
