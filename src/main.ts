@@ -16,7 +16,7 @@ import { useDatabaseStore } from "./stores";
 
   app.mount("#app");
 
-  if (db.connections) {
+  if (db.connections.length) {
     router.replace({ name: "connections" });
     return;
   }
