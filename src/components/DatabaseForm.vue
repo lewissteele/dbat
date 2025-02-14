@@ -1,22 +1,21 @@
 <script setup lang="ts">
-  import Connection from "../types/connection";
   import router from "../router";
   import { NFlex, NInput, NForm, NFormItem, NButton } from "naive-ui";
   import { useDatabaseStore } from "../stores";
+  import { ref } from "vue";
 
   const db = useDatabaseStore();
 
-  const conn: Connection = {
+  const conn = ref({
     host: "",
     password: "",
-    port: 3306,
+    port: "3306",
     user: "",
-  };
+  });
 
   function handle() {
-    db.save(conn);
-
-    router.replace("/");
+    db.save(conn.value);
+    router.replace({ name: "main" });
   }
 </script>
 
@@ -24,18 +23,18 @@
   <n-flex justify="center">
     <n-form>
       <h2>MySQL Connection</h2>
-      <n-form>
+      <n-form :model="conn">
         <n-form-item label="Hostname">
-          <n-input v-model="conn.host" type="text" placeholder="localhost" />
+          <n-input v-model:value="conn.host" type="text" placeholder="localhost" spellcheck="false" />
         </n-form-item>
         <n-form-item label="Username">
-          <n-input v-model="conn.user" type="text" placeholder="root" />
+          <n-input v-model:value="conn.user" type="text" placeholder="root" spellcheck="false" />
         </n-form-item>
         <n-form-item label="Password">
-          <n-input v-model="conn.password" type="password" placeholder="" />
+          <n-input v-model:value="conn.password" type="password" placeholder="" />
         </n-form-item>
         <n-form-item label="Port">
-          <n-input v-model="conn.port" type="text" placeholder="" default-value="3306" />
+          <n-input v-model:value="conn.port" type="text" placeholder="" />
         </n-form-item>
         <n-form-item>
           <n-button @click="handle" type="primary">Save</n-button>

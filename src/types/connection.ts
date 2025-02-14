@@ -1,6 +1,6 @@
 export default interface Connection {
   host: string;
   password: string;
-  port: number;
+  port: string;
   user: string;
 }

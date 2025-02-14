@@ -14,6 +14,9 @@ export const useDatabaseStore = defineStore("database", {
     save(connection: Connection) {
       this.connections.push(connection);
     },
+    empty() {
+      this.connections = [] as Connection[];
+    },
   },
   tauri: {
     saveOnChange: true,
