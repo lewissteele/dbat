@@ -15,7 +15,7 @@
 
   function handle() {
     db.save(conn.value);
-    router.replace({ name: "main" });
+    router.replace({ name: "connections" });
   }
 </script>
 
