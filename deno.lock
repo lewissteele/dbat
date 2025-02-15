@@ -1,6 +1,7 @@
 {
   "version": "4",
   "specifiers": {
+    "npm:@codemirror/lang-sql@^6.8.0": "6.8.0",
     "npm:@tauri-apps/api@2": "2.2.0",
     "npm:@tauri-apps/cli@^2.2.7": "2.2.7",
     "npm:@tauri-apps/plugin-opener@^2.2.5": "2.2.5",
@@ -53,6 +54,17 @@
         "@codemirror/state",
         "@codemirror/view",
         "@lezer/common"
+      ]
+    },
+    "@codemirror/lang-sql@6.8.0": {
+      "integrity": "sha512-aGLmY4OwGqN3TdSx3h6QeA1NrvaYtF7kkoWR/+W7/JzB0gQtJ+VJxewlnE3+VImhA4WVlhmkJr109PefOOhjLg==",
+      "dependencies": [
+        "@codemirror/autocomplete",
+        "@codemirror/language",
+        "@codemirror/state",
+        "@lezer/common",
+        "@lezer/highlight",
+        "@lezer/lr"
       ]
     },
     "@codemirror/language@6.10.8": {
@@ -784,6 +796,7 @@
   "workspace": {
     "packageJson": {
       "dependencies": [
+        "npm:@codemirror/lang-sql@^6.8.0",
         "npm:@tauri-apps/api@2",
         "npm:@tauri-apps/cli@^2.2.7",
         "npm:@tauri-apps/plugin-opener@^2.2.5",
