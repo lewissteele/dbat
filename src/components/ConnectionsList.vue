@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useDatabaseStore } from '../stores';
-import { storeToRefs } from 'pinia';
+import { useDatabaseStore } from "../stores";
+import { storeToRefs } from "pinia";
 
 const db = useDatabaseStore();
 const { connections } = storeToRefs(db);
@@ -8,10 +8,7 @@ const { connections } = storeToRefs(db);
 
 <template>
   <li v-for="conn in connections">
-    {{ conn.host }}
-    {{ conn.user }}
-    {{ conn.password }}
-    {{ conn.port }}
+    {{ conn.host }} {{ conn.user }} {{ conn.password }} {{ conn.port }}
   </li>
 </template>
 

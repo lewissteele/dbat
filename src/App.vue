@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { NConfigProvider, darkTheme } from "naive-ui";
+import { darkTheme, NConfigProvider } from "naive-ui";
 import { RouterView } from "vue-router";
 </script>
 
 <template>
-    <n-config-provider :theme="darkTheme">
-        app
-        <RouterView></RouterView>
-    </n-config-provider>
+  <n-config-provider :theme="darkTheme">
+    app
+    <RouterView></RouterView>
+  </n-config-provider>
 </template>
 
 <style>
