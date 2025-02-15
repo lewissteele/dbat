@@ -14,5 +14,5 @@ jobs:
       - uses: denoland/setup-deno@v2
       - uses: dtolnay/rust-toolchain@stable
       - run: deno install
-      - run: deno fmt --check
+      - run: deno fmt --check --unstable-component
       - run: deno task tauri build
