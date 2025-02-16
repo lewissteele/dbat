@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import CodeMirror from "vue-codemirror6";
 import { ref } from "vue";
-import { sql, MySQL } from "@codemirror/lang-sql";
+import { MySQL, sql } from "@codemirror/lang-sql";
 import { NButton } from "naive-ui";
 
 const lang = sql({
@@ -17,9 +17,9 @@ function handle(): void {
 <template>
   <code-mirror
     v-model="code"
-    :lang=lang
-    :dark=true
-    :tab-size=2
+    :lang="lang"
+    :dark="true"
+    :tab-size="2"
     basic
     wrap
     tab
