@@ -9,6 +9,7 @@
     "core:default",
     "opener:default",
     "sql:default",
-    "pinia:default"
+    "pinia:default",
+    "core:window:allow-show"
   ]
 }
