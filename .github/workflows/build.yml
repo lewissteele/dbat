@@ -15,4 +15,5 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - run: deno install
       - run: deno fmt --check --unstable-component
+      - run: cargo fmt --check
       - run: deno task tauri build
