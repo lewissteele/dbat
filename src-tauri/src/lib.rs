@@ -11,15 +11,9 @@ fn greet(name: &str) -> String {
 pub fn run() {
     tauri::Builder::default()
         .setup(|app| {
-            let submenu = SubmenuBuilder::new(app, "App")
-                .quit()
-                .build()?;
+            let submenu = SubmenuBuilder::new(app, "App").quit().build()?;
 
-            let menu = MenuBuilder::new(app)
-                .items(&[
-                    &submenu,
-                ])
-                .build()?;
+            let menu = MenuBuilder::new(app).items(&[&submenu]).build()?;
 
             app.set_menu(menu)?;
 
