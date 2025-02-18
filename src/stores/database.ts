@@ -4,6 +4,7 @@ import Connection from "../types/connection";
 export const useDatabaseStore = defineStore("database", {
   state: () => ({
     connections: [] as Connection[],
+    active: null as Connection | null,
   }),
   getters: {
     hasConnection(): boolean {
@@ -16,6 +17,9 @@ export const useDatabaseStore = defineStore("database", {
     },
     empty() {
       this.connections = [] as Connection[];
+    },
+    setActive(connection: Connection) {
+      this.active = connection;
     },
   },
   tauri: {
