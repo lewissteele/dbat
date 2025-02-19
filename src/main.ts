@@ -20,7 +20,7 @@ import { useDatabaseStore } from "./stores";
     return;
   }
 
-  if (db.connections.length) {
+  if (db.saved.length) {
     router.replace({ name: "connections" });
     return;
   }

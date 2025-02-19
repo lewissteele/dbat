@@ -1,24 +1,28 @@
 import { defineStore } from "pinia";
 import Connection from "../types/connection";
+import Database from "@tauri-apps/plugin-sql";
 
 export const useDatabaseStore = defineStore("database", {
   state: () => ({
-    connections: [] as Connection[],
+    _conn: null as Database | null,
     active: null as Connection | null,
+    saved: [] as Connection[],
   }),
   getters: {
-    hasConnection(): boolean {
-      return this.connections.length > 0;
+    async conn(): Promise<Database> {
+      if (this._conn) {
+        return this._conn;
+      }
+
+      return this._conn = await Database.load("mysql://root@localhost/search");
     },
   },
   actions: {
     save(connection: Connection) {
-      this.connections.push(connection);
-    },
-    empty() {
-      this.connections = [] as Connection[];
+      this.saved.push(connection);
     },
     setActive(connection: Connection) {
+      this._conn = null;
       this.active = connection;
     },
   },

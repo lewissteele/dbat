@@ -5,7 +5,7 @@ import { NButton } from "naive-ui";
 import Connection from "../types/connection";
 
 const db = useDatabaseStore();
-const { connections } = storeToRefs(db);
+const { saved } = storeToRefs(db);
 
 function handle(conn: Connection): void {
   db.setActive(conn);
@@ -13,7 +13,7 @@ function handle(conn: Connection): void {
 </script>
 
 <template>
-  <li v-for="conn in connections">
+  <li v-for="conn in saved">
     <n-button @click="handle(conn)">{{ conn.user }}@{{ conn.host }}</n-button>
   </li>
 </template>
