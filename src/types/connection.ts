@@ -3,4 +3,5 @@ export default interface Connection {
   password: string;
   port: string;
   user: string;
+  uuid: string;
 }
