@@ -1,29 +1,38 @@
 import { defineStore } from "pinia";
 import Connection from "../types/connection";
 import Database from "@tauri-apps/plugin-sql";
+import { v4 as uuid } from "uuid";
 
 export const useDatabaseStore = defineStore("database", {
   state: () => ({
-    _conn: null as Database | null,
+    _reader: null as Database | null,
+    _writer: null as Database | null,
     active: null as Connection | null,
     saved: [] as Connection[],
   }),
-  getters: {
-    async conn(): Promise<Database> {
-      if (this._conn) {
-        return this._conn;
-      }
-
-      return this._conn = await Database.load("mysql://root@localhost/search");
-    },
-  },
   actions: {
-    save(connection: Connection) {
-      this.saved.push(connection);
+    save(connection: {
+      host: string,
+      password: string,
+      port: string,
+      user: string,
+    }) {
+      this.saved.push({
+        ...connection,
+        uuid: uuid(),
+      });
     },
     setActive(connection: Connection) {
-      this._conn = null;
+      this._reader = null;
+      this._writer = null;
       this.active = connection;
+    },
+    async reader(): Promise<Database> {
+      if (!this._reader) {
+        this._reader = await Database.load("mysql://root@localhost/search");
+      }
+
+      return this._reader;
     },
   },
   tauri: {
