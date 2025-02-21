@@ -3,7 +3,6 @@ import router from "../router";
 import { NButton, NFlex, NForm, NFormItem, NInput } from "naive-ui";
 import { useDatabaseStore } from "../stores";
 import { ref } from "vue";
-import { v4 as uuid } from "uuid";
 
 const db = useDatabaseStore();
 
@@ -12,7 +11,6 @@ const conn = ref({
   password: "",
   port: "3306",
   user: "",
-  uuid: uuid(),
 });
 
 function handle() {
