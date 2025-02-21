@@ -12,10 +12,10 @@ export const useDatabaseStore = defineStore("database", {
   }),
   actions: {
     save(connection: {
-      host: string,
-      password: string,
-      port: string,
-      user: string,
+      host: string;
+      password: string;
+      port: string;
+      user: string;
     }) {
       this.saved.push({
         ...connection,
