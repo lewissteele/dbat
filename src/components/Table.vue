@@ -1,23 +1,29 @@
 <script setup lang="ts">
 import { NTable } from "naive-ui";
-import { defineProps } from "vue";
 
-const { data } = defineProps({
-  data: Array<Object>,
-});
+const { data } = defineProps<{
+  data: object[];
+}>();
 
-console.log(data);
+let headers = [] as any[];
+
+if (data.length) {
+  headers = Object.keys(data[0]);
+}
 </script>
 
 <template>
   <n-table>
     <thead>
-      <th>Header</th>
+      <th v-for="header in headers">
+        {{ header }}
+      </th>
     </thead>
     <tbody>
       <tr v-for="row in data">
-        <td>Row</td>
-        <td>{{ row }}</td>
+        <td v-for="data in row">
+          {{ data }}
+        </td>
       </tr>
     </tbody>
   </n-table>
