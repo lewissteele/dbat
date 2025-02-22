@@ -28,11 +28,7 @@ export const useDatabaseStore = defineStore("database", {
       this.active = connection;
     },
     async reader(): Promise<Database> {
-      if (!this._reader) {
-        this._reader = await Database.load("mysql://root@localhost/search");
-      }
-
-      return this._reader;
+      return await Database.load("mysql://root@localhost/search");
     },
   },
   tauri: {
