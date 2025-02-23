@@ -1,4 +1,4 @@
-export default interface Connection {
+export interface Connection {
   host: string;
   password: string;
   port: string;
