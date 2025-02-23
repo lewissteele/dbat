@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { NTable } from "naive-ui";
+import { computed } from "vue";
 
 const { data } = defineProps<{
   data: any[];
 }>();
 
-let headers = [] as any[];
+const headers = computed(() => {
+  if (data.length) {
+    return Object.keys(data[0]);
+  }
 
-if (data.length) {
-  headers = Object.keys(data[0]);
-}
+  return [];
+});
 </script>
 
 <template>
