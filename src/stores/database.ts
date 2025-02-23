@@ -14,7 +14,8 @@ export const useDatabaseStore = defineStore("database", {
       switch (connection.driver) {
         case Driver.MYSQL:
         case Driver.POSTGRES:
-          path = `${connection.driver}://${connection.user}@${connection.host}/${connection.database}`;
+          path =
+            `${connection.driver}://${connection.user}@${connection.host}/${connection.database}`;
           break;
       }
 
@@ -32,6 +33,6 @@ export const useDatabaseStore = defineStore("database", {
       this.tables = tables.map((table) => ({
         name: Object.values(table)[0] as string,
       }));
-    }
+    },
   },
 });
