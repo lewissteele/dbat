@@ -3,7 +3,7 @@ import router from "./router";
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { createPlugin } from "tauri-plugin-pinia";
-import { useDatabaseStore } from "./stores";
+import { useConfigStore, useDatabaseStore } from "./stores";
 
 (async () => {
   const app = createApp(App);
@@ -11,16 +11,18 @@ import { useDatabaseStore } from "./stores";
   app.use(router);
   app.use(createPinia().use(createPlugin()));
 
+  const config = useConfigStore();
   const db = useDatabaseStore();
-  await db.$tauri.start();
 
+  await config.$tauri.start();
   app.mount("#app");
 
-  if (db.active) {
+  if (config.activeConnection) {
+    await db.connect(config.activeConnection);
     return;
   }
 
-  if (db.saved.length) {
+  if (config.connections.length) {
     router.replace({ name: "connections" });
     return;
   }
