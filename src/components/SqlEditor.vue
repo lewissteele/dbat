@@ -7,7 +7,7 @@ import { useDatabaseStore } from "../stores";
 import Table from "./Table.vue";
 
 const code = ref("");
-const tableData = ref([] as Array<Object>);
+const tableData = ref([] as any[]);
 
 const lang = sql({
   dialect: MySQL,
@@ -16,12 +16,8 @@ const lang = sql({
 const db = useDatabaseStore();
 
 async function handle(): Promise<void> {
-  const reader = await db.reader();
-  const result = await reader.select(code.value) as Array<Object>;
-
+  const result = await db.connection?.select(code.value) as any[];
   tableData.value = result;
-
-  console.log(result);
 }
 </script>
 

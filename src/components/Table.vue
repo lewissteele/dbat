@@ -2,7 +2,7 @@
 import { NTable } from "naive-ui";
 
 const { data } = defineProps<{
-  data: object[];
+  data: any[];
 }>();
 
 let headers = [] as any[];
