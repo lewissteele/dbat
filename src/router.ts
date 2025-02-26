@@ -32,6 +32,6 @@ export default createRouter({
       component: EditorView,
       name: "editor",
       path: "/editor",
-    }
+    },
   ],
 });
