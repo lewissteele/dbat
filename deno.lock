@@ -12,7 +12,7 @@
     "npm:pinia@^2.3.1": "2.3.1_typescript@5.8.2_vue@3.5.13__typescript@5.8.2",
     "npm:tauri-plugin-pinia@1.1.2": "1.1.2_typescript@5.8.2_vue@3.5.13__typescript@5.8.2",
     "npm:typescript@^5.8.2": "5.8.2",
-    "npm:uuid@^11.0.5": "11.0.5",
+    "npm:uuid@^11.1.0": "11.1.0",
     "npm:vite@^6.1.0": "6.1.0",
     "npm:vue-codemirror6@^1.3.11": "1.3.12_vue@3.5.13__typescript@5.8.2_typescript@5.8.2",
     "npm:vue-router@^4.5.0": "4.5.0_vue@3.5.13__typescript@5.8.2_typescript@5.8.2",
@@ -713,8 +713,8 @@
     "typescript@5.8.2": {
       "integrity": "sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ=="
     },
-    "uuid@11.0.5": {
-      "integrity": "sha512-508e6IcKLrhxKdBbcA2b4KQZlLVp2+J5UwQ6F7Drckkc5N9ZJwFa4TgWtsww9UG8fGHbm6gbV19TdM5pQ4GaIA=="
+    "uuid@11.1.0": {
+      "integrity": "sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A=="
     },
     "vdirs@0.1.8_vue@3.5.13__typescript@5.8.2_typescript@5.8.2": {
       "integrity": "sha512-H9V1zGRLQZg9b+GdMk8MXDN2Lva0zx72MPahDKc30v+DtwKjfyOSXWRIX4t2mhDubM1H09gPhWeth/BJWPHGUw==",
@@ -819,7 +819,7 @@
         "npm:pinia@^2.3.1",
         "npm:tauri-plugin-pinia@1.1.2",
         "npm:typescript@^5.8.2",
-        "npm:uuid@^11.0.5",
+        "npm:uuid@^11.1.0",
         "npm:vite@^6.1.0",
         "npm:vue-codemirror6@^1.3.11",
         "npm:vue-router@^4.5.0",
