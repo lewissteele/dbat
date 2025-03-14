@@ -9,7 +9,6 @@ onMounted(() => getCurrentWindow().show());
 
 <template>
   <n-config-provider :theme="darkTheme">
-    app
     <RouterView></RouterView>
   </n-config-provider>
 </template>
