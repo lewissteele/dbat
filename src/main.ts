@@ -19,7 +19,7 @@ import { useConfigStore, useDatabaseStore } from "./stores";
 
   if (config.activeConnection) {
     await db.connect(config.activeConnection);
-    router.replace({ name: "editor" });
+    router.replace({ name: "main" });
     return;
   }
 
