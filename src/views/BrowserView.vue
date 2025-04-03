@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import TableList from "../components/TableList.vue";
 </script>
 
 <template>
-  <TableList />
+  <button type="button" class="btn btn-primary">Test</button>
 </template>
