@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import { darkTheme, NConfigProvider } from "naive-ui";
 import { RouterView } from "vue-router";
-import { onMounted } from "vue";
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import { onMounted } from "vue";
 
 onMounted(() => getCurrentWindow().show());
 </script>
 
 <template>
-  <n-config-provider :theme="darkTheme">
-    <RouterView></RouterView>
-  </n-config-provider>
+  <RouterView></RouterView>
 </template>
 
 <style lang="scss">
