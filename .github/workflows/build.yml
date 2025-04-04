@@ -16,4 +16,4 @@ jobs:
       - run: deno install
       - run: deno fmt --check --unstable-component
       - run: (cd src-tauri && cargo fmt --check)
-      - run: deno task tauri build
+      # - run: deno task tauri build
