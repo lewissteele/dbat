@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { NTable } from "naive-ui";
 import { computed } from "vue";
 
 const { data } = defineProps<{
@@ -16,11 +15,13 @@ const headers = computed(() => {
 </script>
 
 <template>
-  <n-table>
+  <table class="table table-striped table-bordered">
     <thead>
-      <th v-for="header in headers">
-        {{ header }}
-      </th>
+      <tr>
+        <th v-for="header in headers">
+          {{ header }}
+        </th>
+      </tr>
     </thead>
     <tbody>
       <tr v-for="row in data">
@@ -29,5 +30,5 @@ const headers = computed(() => {
         </td>
       </tr>
     </tbody>
-  </n-table>
+  </table>
 </template>
