@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import TableComponent from "../components/Table.vue";
+import router from "../router";
 import { Table } from "../types";
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
@@ -21,6 +22,21 @@ async function selectTable(table: Table): Promise<void> {
 </script>
 
 <template>
+  <div class="row">
+    <button
+      @click='() => router.replace({ name: "connections" })'
+      class="btn btn-primary col"
+    >
+      Connections
+    </button>
+    <button
+      @click='() => router.replace({ name: "editor" })'
+      class="btn btn-primary col"
+    >
+      Editor
+    </button>
+  </div>
+
   <div class="row flex-nowrap">
     <ul class="list-group list-group-flush col-2">
       <a
