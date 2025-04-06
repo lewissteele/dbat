@@ -21,7 +21,7 @@ import { useConfigStore, useDatabaseStore } from "./stores";
     await db.connect(config.activeConnection);
   }
 
-  if (router.currentRoute.value.name != 'main') {
+  if (router.currentRoute.value.name != "main") {
     return;
   }
 
