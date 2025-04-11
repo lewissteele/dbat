@@ -1,17 +1,15 @@
-import { createRouter, createWebHistory } from "vue-router";
-import MainView from "./views/MainView.vue";
-import SetupView from "./views/SetupView.vue";
-import ConnectionsView from "./views/ConnectionsView.vue";
 import BrowserView from "./views/BrowserView.vue";
+import ConnectionsView from "./views/ConnectionsView.vue";
 import EditorView from "./views/EditorView.vue";
+import SetupView from "./views/SetupView.vue";
+import { createRouter, createWebHistory } from "vue-router";
 
 export default createRouter({
   history: createWebHistory(),
   routes: [
     {
-      component: MainView,
-      name: "main",
       path: "/",
+      redirect: "/connections",
     },
     {
       component: SetupView,
