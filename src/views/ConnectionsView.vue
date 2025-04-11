@@ -18,16 +18,26 @@ async function selectConnection(connection: Connection): Promise<void> {
 
 <template>
   <div class="container pt-5">
-    <ul class="list-group col-12">
-      <a
-        @click="async () => await selectConnection(connection)"
-        class="list-group-item list-group-item-action"
-        href="#"
-        v-for="connection in connections"
+    <div class="row mb-3">
+      <button
+        @click='() => router.replace({ "name": "setup" })'
+        class="btn btn-primary"
       >
-        {{ connection.user }}@{{ connection.host }}
-      </a>
-    </ul>
+        Add Connection
+      </button>
+    </div>
+    <div class="row">
+      <ul class="list-group col-12 pe-0">
+        <a
+          @click="async () => await selectConnection(connection)"
+          class="list-group-item list-group-item-action"
+          href="#"
+          v-for="connection in connections"
+        >
+          {{ connection.database }} {{ connection.user }}@{{ connection.host }}
+        </a>
+      </ul>
+    </div>
   </div>
 </template>
 
