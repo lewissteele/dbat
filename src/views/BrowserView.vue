@@ -39,15 +39,15 @@ async function selectTable(table: Table): Promise<void> {
 
   <div class="row flex-nowrap">
     <ul class="list-group list-group-flush col-2">
-      <a
-        :class='{ "list-group-item-light": table.name == selectedTable }'
+      <button
+        :class="{ active: table.name == selectedTable }"
         @click="async () => await selectTable(table)"
         class="list-group-item list-group-item-action"
-        href="#"
+        type="button"
         v-for="table in tables"
       >
         {{ table.name }}
-      </a>
+      </button>
     </ul>
     <TableComponent :data="tableData" class="col-10" />
   </div>
