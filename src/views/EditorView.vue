@@ -48,3 +48,9 @@ async function handle(): Promise<void> {
 
   <Table :data="tableData"></Table>
 </template>
+
+<style lang="scss">
+.cm-editor, .vue-codemirror {
+  height: 200px;
+}
+</style>
