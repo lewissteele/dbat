@@ -8,6 +8,7 @@ export default createRouter({
   history: createWebHistory(),
   routes: [
     {
+      name: "main",
       path: "/",
       redirect: "/connections",
     },
