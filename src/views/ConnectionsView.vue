@@ -34,7 +34,7 @@ async function selectConnection(connection: Connection): Promise<void> {
           href="#"
           v-for="connection in connections"
         >
-          {{ connection.database }} {{ connection.user }}@{{ connection.host }}
+          {{ connection.user }}@{{ connection.host }}/{{ connection.database }}
         </a>
       </ul>
     </div>
