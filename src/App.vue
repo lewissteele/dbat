@@ -11,5 +11,8 @@ onMounted(() => getCurrentWindow().show());
 </template>
 
 <style lang="scss">
+$bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
+
 @import "bootstrap/scss/bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons";
 </style>

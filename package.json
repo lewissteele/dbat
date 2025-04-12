@@ -14,6 +14,7 @@
     "@popperjs/core": "^2.11.8",
     "@tauri-apps/plugin-sql": "~2.2.0",
     "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
     "codemirror": "^6.0.1",
     "pinia": "^2.3.1",
     "tauri-plugin-pinia": "1.1.2",
