@@ -3,6 +3,7 @@ import router from "../router";
 import { Connection, Driver } from "../types";
 import { ref } from "vue";
 import { useConfigStore } from "../stores";
+import { v4 as uuid } from "uuid";
 
 const config = useConfigStore();
 
@@ -13,6 +14,7 @@ const connection = ref({
   password: "",
   port: "3306",
   user: "root",
+  uuid: uuid(),
 });
 
 function saveConnection(): void {
