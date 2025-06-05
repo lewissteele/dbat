@@ -24,6 +24,13 @@ function saveConnection(): void {
 </script>
 
 <template>
+  <button
+    @click='router.push("connections")'
+    aria-label="Close"
+    class="btn-close"
+    type="button"
+  >
+  </button>
   <div class="container p-2">
     <form @submit.prevent="saveConnection" spellcheck="false">
       <div class="mb-3">
