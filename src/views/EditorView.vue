@@ -12,6 +12,7 @@ const tableData = ref([] as any[]);
 
 const lang = sql({
   dialect: MySQL,
+  upperCaseKeywords: false,
 });
 
 const db = useDatabaseStore();
@@ -35,10 +36,8 @@ async function handle(): Promise<void> {
   </button>
 
   <code-mirror
-    :dark="true"
-    :lang="lang"
     :tab-size="2"
-    :extensions="[oneDark]"
+    :extensions="[oneDark, lang]"
     basic
     tab
     v-model="code"
