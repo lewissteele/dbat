@@ -16,8 +16,12 @@ const lang = sql({
 const db = useDatabaseStore();
 
 async function handle(): Promise<void> {
-  const result = await db.connection?.select(code.value) as any[];
-  tableData.value = result;
+  try {
+    const result = await db.connection?.select(code.value) as any[];
+    tableData.value = result;
+  } catch (error: any) {
+    tableData.value = [{ error }];
+  }
 }
 </script>
 
