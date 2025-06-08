@@ -2,6 +2,7 @@
   "version": "5",
   "specifiers": {
     "npm:@codemirror/lang-sql@^6.8.0": "6.9.0",
+    "npm:@codemirror/theme-one-dark@^6.1.2": "6.1.2",
     "npm:@popperjs/core@^2.11.8": "2.11.8",
     "npm:@tauri-apps/api@2": "2.5.0",
     "npm:@tauri-apps/cli@^2.2.7": "2.5.0",
@@ -104,6 +105,15 @@
       "integrity": "sha512-FVqsPqtPWKVVL3dPSxy8wEF/ymIEuVzF1PK3VbUgrxXpJUSHQWWZz4JMToquRxnkw+36LTamCZG2iua2Ptq0fA==",
       "dependencies": [
         "@marijn/find-cluster-break"
+      ]
+    },
+    "@codemirror/theme-one-dark@6.1.2": {
+      "integrity": "sha512-F+sH0X16j/qFLMAfbciKTxVOwkdAS336b7AXTKOZhy8BR3eH/RelsnLgLFINrpST63mmN2OuwUt0W2ndUgYwUA==",
+      "dependencies": [
+        "@codemirror/language",
+        "@codemirror/state",
+        "@codemirror/view",
+        "@lezer/highlight"
       ]
     },
     "@codemirror/view@6.37.1": {
@@ -1086,6 +1096,7 @@
     "packageJson": {
       "dependencies": [
         "npm:@codemirror/lang-sql@^6.8.0",
+        "npm:@codemirror/theme-one-dark@^6.1.2",
         "npm:@popperjs/core@^2.11.8",
         "npm:@tauri-apps/api@2",
         "npm:@tauri-apps/cli@^2.2.7",

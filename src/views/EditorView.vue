@@ -3,6 +3,7 @@ import CodeMirror from "vue-codemirror6";
 import Table from "../components/Table.vue";
 import router from "../router";
 import { MySQL, sql } from "@codemirror/lang-sql";
+import { oneDark } from "@codemirror/theme-one-dark";
 import { ref } from "vue";
 import { useDatabaseStore } from "../stores";
 
@@ -37,6 +38,7 @@ async function handle(): Promise<void> {
     :dark="true"
     :lang="lang"
     :tab-size="2"
+    :extensions="[oneDark]"
     basic
     tab
     v-model="code"
